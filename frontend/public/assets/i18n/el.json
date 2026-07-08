@@ -1,16 +1,26 @@
 {
-  "APP_TITLE": "Διαχείριση Ακινήτων",
-  "BACKEND_STATUS": "Κατάσταση backend",
-  "STATUS": "Κατάσταση",
-  "APPLICATION": "Εφαρμογή",
-  "VERSION": "Έκδοση",
-  "LOADING": "Φόρτωση κατάστασης backend...",
-  "LANG_EN": "Αγγλικά",
-  "LANG_EL": "Ελληνικά",
-  "CUSTOMERS": "Πελάτες",
-  "CUSTOMER_ID": "Κωδικός",
-  "FIRST_NAME": "Όνομα",
-  "LAST_NAME": "Επώνυμο",
-  "EMAIL": "Email",
-  "PHONE": "Τηλέφωνο"
+  "APP": {
+    "TITLE": "Διαχείριση Ακινήτων"
+  },
+  "HEALTH": {
+    "TITLE": "Κατάσταση backend",
+    "STATUS": "Κατάσταση",
+    "APPLICATION": "Εφαρμογή",
+    "VERSION": "Έκδοση",
+    "LOADING": "Φόρτωση κατάστασης backend..."
+  },
+  "LANGUAGE": {
+    "EN": "Αγγλικά",
+    "EL": "Ελληνικά"
+  },
+  "CUSTOMERS": {
+    "TITLE": "Πελάτες",
+    "ID": "Κωδικός",
+    "FIRST_NAME": "Όνομα",
+    "LAST_NAME": "Επώνυμο"
+  },
+  "COMMON": {
+    "EMAIL": "Email",
+    "PHONE": "Τηλέφωνο"
+  }
 }

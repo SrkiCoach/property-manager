@@ -1,16 +1,26 @@
 {
-  "APP_TITLE": "Property Manager",
-  "BACKEND_STATUS": "Backend status",
-  "STATUS": "Status",
-  "APPLICATION": "Application",
-  "VERSION": "Version",
-  "LOADING": "Loading backend status...",
-  "LANG_EN": "English",
-  "LANG_EL": "Greek",
-  "CUSTOMERS": "Customers",
-  "CUSTOMER_ID": "ID",
-  "FIRST_NAME": "First name",
-  "LAST_NAME": "Last name",
-  "EMAIL": "Email",
-  "PHONE": "Phone"
+  "APP": {
+    "TITLE": "Property Manager"
+  },
+  "HEALTH": {
+    "TITLE": "Backend status",
+    "STATUS": "Status",
+    "APPLICATION": "Application",
+    "VERSION": "Version",
+    "LOADING": "Loading backend status..."
+  },
+  "LANGUAGE": {
+    "EN": "English",
+    "EL": "Greek"
+  },
+  "CUSTOMERS": {
+    "TITLE": "Customers",
+    "ID": "ID",
+    "FIRST_NAME": "First name",
+    "LAST_NAME": "Last name"
+  },
+  "COMMON": {
+    "EMAIL": "Email",
+    "PHONE": "Phone"
+  }
 }

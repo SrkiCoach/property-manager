@@ -1,23 +1,23 @@
-<h1>{{ 'APP_TITLE' | translate }}</h1>
+<h1>{{ 'APP.TITLE' | translate }}</h1>
 
 <button type="button" (click)="changeLanguage('en')">
-  {{ 'LANG_EN' | translate }}
+  {{ 'LANGUAGE.EN' | translate }}
 </button>
 
 <button type="button" (click)="changeLanguage('el')">
-  {{ 'LANG_EL' | translate }}
+  {{ 'LANGUAGE.EL' | translate }}
 </button>
 
 <hr>
 
-<h2>{{ 'BACKEND_STATUS' | translate }}</h2>
+<h2>{{ 'HEALTH.TITLE' | translate }}</h2>
 
 @if (health()) {
-  <p>{{ 'STATUS' | translate }}: {{ health()?.status }}</p>
-  <p>{{ 'APPLICATION' | translate }}: {{ health()?.application }}</p>
-  <p>{{ 'VERSION' | translate }}: {{ health()?.version }}</p>
+  <p>{{ 'HEALTH.STATUS' | translate }}: {{ health()?.status }}</p>
+  <p>{{ 'HEALTH.APPLICATION' | translate }}: {{ health()?.application }}</p>
+  <p>{{ 'HEALTH.VERSION' | translate }}: {{ health()?.version }}</p>
 } @else {
-  <p>{{ 'LOADING' | translate }}</p>
+  <p>{{ 'HEALTH.LOADING' | translate }}</p>
 }
 
 <hr>
