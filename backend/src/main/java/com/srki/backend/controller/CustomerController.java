@@ -4,6 +4,10 @@ import com.srki.backend.dto.CustomerResponse;
 import com.srki.backend.service.CustomerService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import com.srki.backend.dto.CreateCustomerRequest;
 
 import java.util.List;
 
@@ -19,5 +23,10 @@ public class CustomerController {
     @GetMapping("/api/customers")
     public List<CustomerResponse> findAll() {
         return customerService.findAll();
+    }
+
+    @PostMapping("/api/customers")
+    public CustomerResponse create(@Valid @RequestBody CreateCustomerRequest request) {
+        return customerService.create(request);
     }
 }

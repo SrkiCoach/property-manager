@@ -1,6 +1,8 @@
 package com.srki.backend.service;
 
+import com.srki.backend.dto.CreateCustomerRequest;
 import com.srki.backend.dto.CustomerResponse;
+import com.srki.backend.entity.Customer;
 import com.srki.backend.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +28,24 @@ public class CustomerService {
                         customer.getPhone()
                 ))
                 .toList();
+    }
+
+    public CustomerResponse create(CreateCustomerRequest request) {
+        Customer customer = new Customer(
+                request.firstName(),
+                request.lastName(),
+                request.email(),
+                request.phone()
+        );
+
+        Customer savedCustomer = customerRepository.save(customer);
+
+        return new CustomerResponse(
+                savedCustomer.getId(),
+                savedCustomer.getFirstName(),
+                savedCustomer.getLastName(),
+                savedCustomer.getEmail(),
+                savedCustomer.getPhone()
+        );
     }
 }
