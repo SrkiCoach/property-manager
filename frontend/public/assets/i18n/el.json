@@ -6,5 +6,11 @@
   "VERSION": "Έκδοση",
   "LOADING": "Φόρτωση κατάστασης backend...",
   "LANG_EN": "Αγγλικά",
-  "LANG_EL": "Ελληνικά"
+  "LANG_EL": "Ελληνικά",
+  "CUSTOMERS": "Πελάτες",
+  "CUSTOMER_ID": "Κωδικός",
+  "FIRST_NAME": "Όνομα",
+  "LAST_NAME": "Επώνυμο",
+  "EMAIL": "Email",
+  "PHONE": "Τηλέφωνο"
 }

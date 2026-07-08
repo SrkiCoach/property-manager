@@ -1,0 +1,25 @@
+<h2>{{ 'CUSTOMERS' | translate }}</h2>
+
+<table border="1" cellpadding="8">
+  <thead>
+    <tr>
+      <th>{{ 'CUSTOMER_ID' | translate }}</th>
+      <th>{{ 'FIRST_NAME' | translate }}</th>
+      <th>{{ 'LAST_NAME' | translate }}</th>
+      <th>{{ 'EMAIL' | translate }}</th>
+      <th>{{ 'PHONE' | translate }}</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (customer of customers(); track customer.id) {
+      <tr>
+        <td>{{ customer.id }}</td>
+        <td>{{ customer.firstName }}</td>
+        <td>{{ customer.lastName }}</td>
+        <td>{{ customer.email }}</td>
+        <td>{{ customer.phone }}</td>
+      </tr>
+    }
+  </tbody>
+</table>
