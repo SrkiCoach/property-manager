@@ -1,0 +1,11 @@
+<nav class="app-nav">
+  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <i class="pi pi-home"></i>
+    {{ 'NAV.DASHBOARD' | translate }}
+  </a>
+
+  <a routerLink="/customers" routerLinkActive="active">
+    <i class="pi pi-users"></i>
+    {{ 'NAV.CUSTOMERS' | translate }}
+  </a>
+</nav>

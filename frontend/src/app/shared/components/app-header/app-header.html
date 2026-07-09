@@ -1,0 +1,20 @@
+<header class="app-header">
+  <div class="brand">
+    <div class="brand-icon">🏠</div>
+
+    <div>
+      <h1>{{ 'APP.TITLE' | translate }}</h1>
+      <p>{{ 'APP.SUBTITLE' | translate }}</p>
+    </div>
+  </div>
+
+  <div class="language-actions">
+    <button type="button" (click)="changeLanguage('en')">
+      {{ 'LANGUAGE.EN' | translate }}
+    </button>
+
+    <button type="button" (click)="changeLanguage('el')">
+      {{ 'LANGUAGE.EL' | translate }}
+    </button>
+  </div>
+</header>

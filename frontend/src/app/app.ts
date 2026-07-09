@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { CustomerList } from './features/customers/components/customer-list/customer-list';
 import { CustomerForm } from './features/customers/components/customer-form/customer-form'; 
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { AppHeader } from './shared/components/app-header/app-header';
+import { AppMenu } from './shared/components/app-menu/app-menu';
 
 interface HealthResponse {
   status: string;
@@ -12,7 +15,7 @@ interface HealthResponse {
 
 @Component({
   selector: 'app-root',
-  imports: [TranslatePipe, CustomerList, CustomerForm],
+  imports: [RouterOutlet, AppHeader, AppMenu],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

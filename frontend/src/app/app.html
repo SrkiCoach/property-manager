@@ -1,27 +1,9 @@
-<h1>{{ 'APP.TITLE' | translate }}</h1>
+<div class="app-shell">
+  <app-header (languageChanged)="changeLanguage($event)"></app-header>
 
-<button type="button" (click)="changeLanguage('en')">
-  {{ 'LANGUAGE.EN' | translate }}
-</button>
+  <app-menu></app-menu>
 
-<button type="button" (click)="changeLanguage('el')">
-  {{ 'LANGUAGE.EL' | translate }}
-</button>
-
-<hr>
-
-<h2>{{ 'HEALTH.TITLE' | translate }}</h2>
-
-@if (health()) {
-  <p>{{ 'HEALTH.STATUS' | translate }}: {{ health()?.status }}</p>
-  <p>{{ 'HEALTH.APPLICATION' | translate }}: {{ health()?.application }}</p>
-  <p>{{ 'HEALTH.VERSION' | translate }}: {{ health()?.version }}</p>
-} @else {
-  <p>{{ 'HEALTH.LOADING' | translate }}</p>
-}
-
-<app-customer-form></app-customer-form>
-
-<hr>
-
-<app-customer-list></app-customer-list>
+  <main class="app-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

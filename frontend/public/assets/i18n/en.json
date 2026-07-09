@@ -1,6 +1,7 @@
 {
   "APP": {
-    "TITLE": "Property Manager"
+    "TITLE": "Property Manager",
+    "SUBTITLE": "Small property management system"
   },
   "HEALTH": {
     "TITLE": "Backend status",
@@ -25,5 +26,13 @@
     "EMAIL": "Email",
     "PHONE": "Phone",
     "SAVE": "Save"
+  },
+  "NAV": {
+  "DASHBOARD": "Dashboard",
+  "CUSTOMERS": "Customers"
+  },
+  "DASHBOARD": {
+    "TITLE": "Dashboard",
+    "WELCOME": "Welcome to Property Manager."
   }
 }
