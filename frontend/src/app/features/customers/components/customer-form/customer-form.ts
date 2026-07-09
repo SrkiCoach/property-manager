@@ -3,9 +3,19 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CustomerService } from '../../services/customer.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card'; 
+import { InputTextModule } from 'primeng/inputtext'; 
+
 @Component({
   selector: 'app-customer-form',
-  imports: [ReactiveFormsModule, TranslatePipe],
+  imports: [
+    ReactiveFormsModule,
+    TranslatePipe,
+    ButtonModule,
+    CardModule,
+    InputTextModule
+  ],
   templateUrl: './customer-form.html',
   styleUrl: './customer-form.scss'
 })

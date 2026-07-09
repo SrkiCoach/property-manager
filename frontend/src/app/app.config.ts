@@ -12,6 +12,9 @@ import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { routes } from './app.routes';
 
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeuix/themes/aura';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
@@ -26,6 +29,14 @@ export const appConfig: ApplicationConfig = {
         prefix: './assets/i18n/',
         suffix: '.json'
       })
+    }),
+    providePrimeNG({
+      theme: {
+        preset: Aura,
+        options: {
+          darkModeSelector: false
+        }
+      }
     })
   ]
 };
