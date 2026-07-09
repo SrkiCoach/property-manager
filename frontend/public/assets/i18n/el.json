@@ -17,10 +17,13 @@
     "TITLE": "Πελάτες",
     "ID": "Κωδικός",
     "FIRST_NAME": "Όνομα",
-    "LAST_NAME": "Επώνυμο"
+    "LAST_NAME": "Επώνυμο",
+    "NEW_CUSTOMER": "Νέος πελάτης",
+    "SAVE": "Αποθήκευση"
   },
   "COMMON": {
     "EMAIL": "Email",
-    "PHONE": "Τηλέφωνο"
+    "PHONE": "Τηλέφωνο",
+    "SAVE": "Αποθήκευση"
   }
 }

@@ -1,0 +1,27 @@
+<h2>{{ 'CUSTOMERS.NEW_CUSTOMER' | translate }}</h2>
+
+<form [formGroup]="customerForm" (ngSubmit)="save()">
+  <div>
+    <label>{{ 'CUSTOMERS.FIRST_NAME' | translate }}</label>
+    <input type="text" formControlName="firstName">
+  </div>
+
+  <div>
+    <label>{{ 'CUSTOMERS.LAST_NAME' | translate }}</label>
+    <input type="text" formControlName="lastName">
+  </div>
+
+  <div>
+    <label>{{ 'COMMON.EMAIL' | translate }}</label>
+    <input type="email" formControlName="email">
+  </div>
+
+  <div>
+    <label>{{ 'COMMON.PHONE' | translate }}</label>
+    <input type="text" formControlName="phone">
+  </div>
+
+  <button type="submit">
+    {{ 'COMMON.SAVE' | translate }}
+  </button>
+</form>

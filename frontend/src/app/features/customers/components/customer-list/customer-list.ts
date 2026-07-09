@@ -16,6 +16,14 @@ export class CustomerList implements OnInit {
   constructor(private customerService: CustomerService) {}
 
   ngOnInit(): void {
+    this.loadCustomers();
+
+    this.customerService.customerChanged$.subscribe(() => {
+      this.loadCustomers();
+    });
+  }
+
+  private loadCustomers(): void {
     this.customerService.findAll().subscribe(customers => {
       this.customers.set(customers);
     });

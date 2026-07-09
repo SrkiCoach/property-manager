@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { CustomerList } from './features/customers/components/customer-list/customer-list';
+import { CustomerForm } from './features/customers/components/customer-form/customer-form'; 
 
 interface HealthResponse {
   status: string;
@@ -11,7 +12,7 @@ interface HealthResponse {
 
 @Component({
   selector: 'app-root',
-  imports: [TranslatePipe, CustomerList],
+  imports: [TranslatePipe, CustomerList, CustomerForm],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

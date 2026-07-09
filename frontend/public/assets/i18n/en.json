@@ -17,10 +17,13 @@
     "TITLE": "Customers",
     "ID": "ID",
     "FIRST_NAME": "First name",
-    "LAST_NAME": "Last name"
+    "LAST_NAME": "Last name",
+    "NEW_CUSTOMER": "New customer",
+    "SAVE": "Save"
   },
   "COMMON": {
     "EMAIL": "Email",
-    "PHONE": "Phone"
+    "PHONE": "Phone",
+    "SAVE": "Save"
   }
 }
