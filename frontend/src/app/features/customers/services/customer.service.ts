@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Customer } from './customer.model';
+import { Customer } from '../models/customer';
+import { CreateCustomerRequest } from '../models/create-customer-request';
 
 @Injectable({
   providedIn: 'root'
@@ -14,5 +15,9 @@ export class CustomerService {
 
   findAll(): Observable<Customer[]> {
     return this.http.get<Customer[]>(this.apiUrl);
+  }
+
+  create(request: CreateCustomerRequest) {
+    return this.http.post<Customer>(this.apiUrl, request);
   }
 }

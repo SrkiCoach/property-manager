@@ -1,6 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { CustomerService } from '../customer.service';
-import { Customer } from '../customer.model';
+import { CustomerService } from '../../services/customer.service';
+import { Customer } from '../../models/customer';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
