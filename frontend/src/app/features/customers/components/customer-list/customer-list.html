@@ -4,9 +4,17 @@
       {{ 'CUSTOMERS.TITLE' | translate }}
     </h2>
 
-    <span class="table-count">
-      {{ totalItems() }} {{ 'CUSTOMERS.ITEMS' | translate }}
-    </span>
+    <span class="table-count"> {{ totalItems() }} {{ 'CUSTOMERS.ITEMS' | translate }} </span>
+  </div>
+  <div class="table-search">
+    <i class="pi pi-search"></i>
+
+    <input
+      pInputText
+      type="search"
+      [formControl]="searchControl"
+      [placeholder]="'CUSTOMERS.SEARCH_PLACEHOLDER' | translate"
+    />
   </div>
 </div>
 
@@ -21,12 +29,12 @@
     [loading]="loading()"
     [showGridlines]="true"
     [stripedRows]="true"
-     paginatorDropdownAppendTo="body"
+    paginatorDropdownAppendTo="body"
     sortField="lastName"
     [sortOrder]="1"
     dataKey="id"
-    (onLazyLoad)="loadCustomers($event)">
-
+    (onLazyLoad)="loadCustomers($event)"
+  >
     <ng-template #header>
       <tr>
         <th pSortableColumn="id">
@@ -77,8 +85,8 @@
             [text]="true"
             [rounded]="true"
             [attr.aria-label]="'COMMON.EDIT' | translate"
-            (click)="editCustomer(customer)">
-          </button>
+            (click)="editCustomer(customer)"
+          ></button>
 
           <button
             pButton
@@ -88,8 +96,8 @@
             [text]="true"
             [rounded]="true"
             [attr.aria-label]="'COMMON.DELETE' | translate"
-            (click)="deleteCustomer(customer)">
-          </button>
+            (click)="deleteCustomer(customer)"
+          ></button>
         </td>
       </tr>
     </ng-template>

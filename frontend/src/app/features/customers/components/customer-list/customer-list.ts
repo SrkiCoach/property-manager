@@ -7,21 +7,23 @@ import { ButtonModule } from 'primeng/button';
 import { Customer } from '../../models/customer';
 import { CustomerService } from '../../services/customer.service';
 
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { InputTextModule } from 'primeng/inputtext';
+
 @Component({
   selector: 'app-customer-list',
-  imports: [
-    TranslatePipe,
-    TableModule,
-    ButtonModule
-  ],
+  imports: [TranslatePipe, TableModule, ButtonModule, InputTextModule, ReactiveFormsModule],
   templateUrl: './customer-list.html',
-  styleUrl: './customer-list.scss'
+  styleUrl: './customer-list.scss',
 })
 export class CustomerList implements OnInit, OnDestroy {
-
   customers = signal<Customer[]>([]);
   totalItems = signal(0);
   loading = signal(false);
+
+  searchControl = new FormControl('', { nonNullable: true });
+  private currentSearch = '';
 
   readonly rows = 5;
   readonly rowsPerPageOptions = [5, 10, 20];
@@ -36,9 +38,15 @@ export class CustomerList implements OnInit, OnDestroy {
   constructor(private customerService: CustomerService) {}
 
   ngOnInit(): void {
-    this.customerService.customerChanged$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
+    this.customerService.customerChanged$.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.loadCurrentPage();
+    });
+
+    this.searchControl.valueChanges
+      .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$))
+      .subscribe((search) => {
+        this.currentSearch = search.trim();
+        this.currentPage = 0;
         this.loadCurrentPage();
       });
   }
@@ -70,24 +78,27 @@ export class CustomerList implements OnInit, OnDestroy {
   private loadCurrentPage(): void {
     this.loading.set(true);
 
-    this.customerService.findPaged(
-      this.currentPage,
-      this.currentSize,
-      this.currentSort,
-      this.currentDirection
-    ).subscribe({
-      next: response => {
-        this.customers.set(response.items);
-        this.totalItems.set(response.totalItems);
-        this.loading.set(false);
-      },
-      error: error => {
-        console.error('Could not load customers', error);
-        this.customers.set([]);
-        this.totalItems.set(0);
-        this.loading.set(false);
-      }
-    });
+    this.customerService
+      .findPaged(
+        this.currentPage,
+        this.currentSize,
+        this.currentSort,
+        this.currentDirection,
+        this.currentSearch,
+      )
+      .subscribe({
+        next: (response) => {
+          this.customers.set(response.items);
+          this.totalItems.set(response.totalItems);
+          this.loading.set(false);
+        },
+        error: (error) => {
+          console.error('Could not load customers', error);
+          this.customers.set([]);
+          this.totalItems.set(0);
+          this.loading.set(false);
+        },
+      });
   }
 
   ngOnDestroy(): void {

@@ -16,67 +16,80 @@ import java.util.List;
 @Service
 public class CustomerService {
 
-    private final CustomerRepository customerRepository;
+        private final CustomerRepository customerRepository;
 
-    public CustomerService(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
+        public CustomerService(CustomerRepository customerRepository) {
+                this.customerRepository = customerRepository;
+        }
 
-    public List<CustomerResponse> findAll() {
-        return customerRepository.findAll()
-                .stream()
-                .map(this::toResponse)
-                .toList();
-    }
+        public List<CustomerResponse> findAll() {
+                return customerRepository.findAll()
+                                .stream()
+                                .map(this::toResponse)
+                                .toList();
+        }
 
-    public PagedResponse<CustomerResponse> findPaged(
-            int page,
-            int size,
-            String sort,
-            String direction) {
-        Sort.Direction sortDirection = "desc".equalsIgnoreCase(direction)
-                ? Sort.Direction.DESC
-                : Sort.Direction.ASC;
+        public PagedResponse<CustomerResponse> findPaged(
+                        int page,
+                        int size,
+                        String sort,
+                        String direction,
+                        String search) {
+                Sort.Direction sortDirection = "desc".equalsIgnoreCase(direction)
+                                ? Sort.Direction.DESC
+                                : Sort.Direction.ASC;
 
-        Pageable pageable = PageRequest.of(
-                page,
-                size,
-                Sort.by(sortDirection, sort));
+                Pageable pageable = PageRequest.of(
+                                page,
+                                size,
+                                Sort.by(sortDirection, sort));
 
-        Page<Customer> customerPage = customerRepository.findAll(pageable);
+                Page<Customer> customerPage;
 
-        List<CustomerResponse> items = customerPage
-                .getContent()
-                .stream()
-                .map(this::toResponse)
-                .toList();
+                if (search == null || search.isBlank()) {
+                        customerPage = customerRepository.findAll(pageable);
+                } else {
+                        customerPage = customerRepository
+                                        .findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrPhoneContainingIgnoreCase(
+                                                        search,
+                                                        search,
+                                                        search,
+                                                        search,
+                                                        pageable);
+                }
 
-        return new PagedResponse<>(
-                items,
-                customerPage.getNumber(),
-                customerPage.getSize(),
-                customerPage.getTotalElements(),
-                customerPage.getTotalPages());
-    }
+                List<CustomerResponse> items = customerPage
+                                .getContent()
+                                .stream()
+                                .map(this::toResponse)
+                                .toList();
 
-    public CustomerResponse create(CreateCustomerRequest request) {
-        Customer customer = new Customer(
-                request.firstName(),
-                request.lastName(),
-                request.email(),
-                request.phone());
+                return new PagedResponse<>(
+                                items,
+                                customerPage.getNumber(),
+                                customerPage.getSize(),
+                                customerPage.getTotalElements(),
+                                customerPage.getTotalPages());
+        }
 
-        Customer savedCustomer = customerRepository.save(customer);
+        public CustomerResponse create(CreateCustomerRequest request) {
+                Customer customer = new Customer(
+                                request.firstName(),
+                                request.lastName(),
+                                request.email(),
+                                request.phone());
 
-        return toResponse(savedCustomer);
-    }
+                Customer savedCustomer = customerRepository.save(customer);
 
-    private CustomerResponse toResponse(Customer customer) {
-        return new CustomerResponse(
-                customer.getId(),
-                customer.getFirstName(),
-                customer.getLastName(),
-                customer.getEmail(),
-                customer.getPhone());
-    }
+                return toResponse(savedCustomer);
+        }
+
+        private CustomerResponse toResponse(Customer customer) {
+                return new CustomerResponse(
+                                customer.getId(),
+                                customer.getFirstName(),
+                                customer.getLastName(),
+                                customer.getEmail(),
+                                customer.getPhone());
+        }
 }

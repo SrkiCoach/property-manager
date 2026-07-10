@@ -37,8 +37,14 @@ public class CustomerController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
             @RequestParam(defaultValue = "la") String sort,
-            @RequestParam(defaultValue = "asc") String direction) {
-        return customerService.findPaged(page, size, sort, direction);
+            @RequestParam(defaultValue = "asc") String direction,
+            @RequestParam(defaultValue = "") String search) {
+        return customerService.findPaged(
+                page,
+                size,
+                sort,
+                direction,
+                search);
 
     }
 }

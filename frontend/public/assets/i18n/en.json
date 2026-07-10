@@ -24,7 +24,8 @@
     "SAVED_SUCCESSFULLY": "Customer saved successfully.",
     "SAVE_FAILED": "Customer could not be saved.",
     "ITEMS": "customers",
-    "EMPTY": "No customers were found."
+    "EMPTY": "No customers were found.",
+    "SEARCH_PLACEHOLDER": "Search customers..."
   },
   "COMMON": {
     "EMAIL": "Email",

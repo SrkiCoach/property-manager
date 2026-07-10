@@ -31,12 +31,14 @@ export class CustomerService {
     size: number,
     sort: string,
     direction: 'asc' | 'desc',
+    search: string
   ): Observable<PagedResponse<Customer>> {
     const params = new HttpParams()
       .set('page', page)
       .set('size', size)
       .set('sort', sort)
-      .set('direction', direction);
+      .set('direction', direction)
+      .set('search', search);
 
     return this.http.get<PagedResponse<Customer>>(`${this.apiUrl}/paged`, { params });
   }

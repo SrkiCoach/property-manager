@@ -31,3 +31,21 @@
 :host ::ng-deep .p-paginator {
   border-top: 1px solid var(--app-border);
 }
+
+.table-search {
+  position: relative;
+  width: min(100%, 320px);
+
+  i {
+    position: absolute;
+    top: 50%;
+    left: var(--spacing-sm);
+    transform: translateY(-50%);
+    color: var(--app-text-muted);
+  }
+
+  input {
+    width: 100%;
+    padding-left: 2rem;
+  }
+}
