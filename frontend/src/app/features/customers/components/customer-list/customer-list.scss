@@ -1,0 +1,33 @@
+:host {
+  display: block;
+}
+
+.table-count {
+  display: block;
+  margin-top: var(--spacing-xs);
+  color: var(--app-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.actions-column {
+  width: 110px;
+  text-align: center;
+}
+
+.row-actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-xs);
+}
+
+:host ::ng-deep .p-datatable {
+  font-size: var(--font-size-md);
+}
+
+:host ::ng-deep .p-datatable-thead > tr > th {
+  white-space: nowrap;
+}
+
+:host ::ng-deep .p-paginator {
+  border-top: 1px solid var(--app-border);
+}

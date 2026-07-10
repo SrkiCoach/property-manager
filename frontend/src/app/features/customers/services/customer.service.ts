@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, Subject, tap } from 'rxjs';
 import { Customer } from '../models/customer';
 import { CreateCustomerRequest } from '../models/create-customer-request';
+import { PagedResponse } from '../../../shared/models/paged-response';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CustomerService {
-
   private readonly apiUrl = '/api/customers';
 
   private readonly customerChangedSubject = new Subject<void>();
@@ -21,8 +21,23 @@ export class CustomerService {
   }
 
   create(request: CreateCustomerRequest): Observable<Customer> {
-    return this.http.post<Customer>(this.apiUrl, request).pipe(
-      tap(() => this.customerChangedSubject.next())
-    );
+    return this.http
+      .post<Customer>(this.apiUrl, request)
+      .pipe(tap(() => this.customerChangedSubject.next()));
+  }
+
+  findPaged(
+    page: number,
+    size: number,
+    sort: string,
+    direction: 'asc' | 'desc',
+  ): Observable<PagedResponse<Customer>> {
+    const params = new HttpParams()
+      .set('page', page)
+      .set('size', size)
+      .set('sort', sort)
+      .set('direction', direction);
+
+    return this.http.get<PagedResponse<Customer>>(`${this.apiUrl}/paged`, { params });
   }
 }

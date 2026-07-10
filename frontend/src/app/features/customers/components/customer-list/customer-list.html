@@ -1,25 +1,106 @@
-<h2>{{ 'CUSTOMERS.TITLE' | translate }}</h2>
+<div class="table-toolbar">
+  <div>
+    <h2 class="table-title">
+      {{ 'CUSTOMERS.TITLE' | translate }}
+    </h2>
 
-<table border="1" cellpadding="8">
-  <thead>
-    <tr>
-      <th>{{ 'CUSTOMERS.ID' | translate }}</th>
-      <th>{{ 'CUSTOMERS.FIRST_NAME' | translate }}</th>
-      <th>{{ 'CUSTOMERS.LAST_NAME' | translate }}</th>
-      <th>{{ 'COMMON.EMAIL' | translate }}</th>
-      <th>{{ 'COMMON.PHONE' | translate }}</th>
-    </tr>
-  </thead>
+    <span class="table-count">
+      {{ totalItems() }} {{ 'CUSTOMERS.ITEMS' | translate }}
+    </span>
+  </div>
+</div>
 
-  <tbody>
-    @for (customer of customers(); track customer.id) {
+<div class="table-container">
+  <p-table
+    [value]="customers()"
+    [lazy]="true"
+    [paginator]="true"
+    [rows]="rows"
+    [rowsPerPageOptions]="rowsPerPageOptions"
+    [totalRecords]="totalItems()"
+    [loading]="loading()"
+    [showGridlines]="true"
+    [stripedRows]="true"
+    sortField="lastName"
+    [sortOrder]="1"
+    dataKey="id"
+    (onLazyLoad)="loadCustomers($event)">
+
+    <ng-template #header>
+      <tr>
+        <th pSortableColumn="id">
+          {{ 'CUSTOMERS.ID' | translate }}
+          <p-sortIcon field="id"></p-sortIcon>
+        </th>
+
+        <th pSortableColumn="firstName">
+          {{ 'CUSTOMERS.FIRST_NAME' | translate }}
+          <p-sortIcon field="firstName"></p-sortIcon>
+        </th>
+
+        <th pSortableColumn="lastName">
+          {{ 'CUSTOMERS.LAST_NAME' | translate }}
+          <p-sortIcon field="lastName"></p-sortIcon>
+        </th>
+
+        <th pSortableColumn="email">
+          {{ 'COMMON.EMAIL' | translate }}
+          <p-sortIcon field="email"></p-sortIcon>
+        </th>
+
+        <th pSortableColumn="phone">
+          {{ 'COMMON.PHONE' | translate }}
+          <p-sortIcon field="phone"></p-sortIcon>
+        </th>
+
+        <th class="actions-column">
+          {{ 'COMMON.ACTIONS' | translate }}
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-customer>
       <tr>
         <td>{{ customer.id }}</td>
         <td>{{ customer.firstName }}</td>
         <td>{{ customer.lastName }}</td>
         <td>{{ customer.email }}</td>
         <td>{{ customer.phone }}</td>
+
+        <td class="row-actions">
+          <button
+            pButton
+            type="button"
+            icon="pi pi-pencil"
+            severity="secondary"
+            [text]="true"
+            [rounded]="true"
+            [attr.aria-label]="'COMMON.EDIT' | translate"
+            (click)="editCustomer(customer)">
+          </button>
+
+          <button
+            pButton
+            type="button"
+            icon="pi pi-trash"
+            severity="danger"
+            [text]="true"
+            [rounded]="true"
+            [attr.aria-label]="'COMMON.DELETE' | translate"
+            (click)="deleteCustomer(customer)">
+          </button>
+        </td>
       </tr>
-    }
-  </tbody>
-</table>
+    </ng-template>
+
+    <ng-template #emptymessage>
+      <tr>
+        <td colspan="6">
+          <div class="empty-message">
+            {{ 'CUSTOMERS.EMPTY' | translate }}
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

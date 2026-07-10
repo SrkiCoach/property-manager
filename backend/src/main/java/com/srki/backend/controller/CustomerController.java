@@ -8,6 +8,8 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.srki.backend.dto.CreateCustomerRequest;
+import com.srki.backend.dto.PagedResponse;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -28,5 +30,15 @@ public class CustomerController {
     @PostMapping("/api/customers")
     public CustomerResponse create(@Valid @RequestBody CreateCustomerRequest request) {
         return customerService.create(request);
+    }
+
+    @GetMapping("/api/customers/paged")
+    public PagedResponse<CustomerResponse> findPaged(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "la") String sort,
+            @RequestParam(defaultValue = "asc") String direction) {
+        return customerService.findPaged(page, size, sort, direction);
+
     }
 }

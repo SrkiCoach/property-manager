@@ -22,12 +22,17 @@
     "NEW_CUSTOMER": "New customer",
     "SAVE": "Save",
     "SAVED_SUCCESSFULLY": "Customer saved successfully.",
-    "SAVE_FAILED": "Customer could not be saved."
+    "SAVE_FAILED": "Customer could not be saved.",
+    "ITEMS": "customers",
+    "EMPTY": "No customers were found."
   },
   "COMMON": {
     "EMAIL": "Email",
     "PHONE": "Phone",
-    "SAVE": "Save"
+    "SAVE": "Save",
+    "ACTIONS": "Actions",
+    "EDIT": "Edit",
+    "DELETE": "Delete"
   },
   "NAV": {
     "DASHBOARD": "Dashboard",
