@@ -1,37 +1,41 @@
-<div class="customer-form-card">
-  <p-card
-      [header]="'CUSTOMERS.NEW_CUSTOMER' | translate">
-    <form [formGroup]="customerForm" (ngSubmit)="save()" class="customer-form">
-      <div class="form-grid">
-        <div class="field">
-          <label>{{ 'CUSTOMERS.FIRST_NAME' | translate }}</label>
-          <input pInputText type="text" formControlName="firstName">
-        </div>
+<p-card [header]="'CUSTOMERS.NEW_CUSTOMER' | translate">
+  <form [formGroup]="customerForm" (ngSubmit)="save()">
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="firstName">
+          {{ 'CUSTOMERS.FIRST_NAME' | translate }}
+        </label>
 
-        <div class="field">
-          <label>{{ 'CUSTOMERS.LAST_NAME' | translate }}</label>
-          <input pInputText type="text" formControlName="lastName">
-        </div>
-
-        <div class="field">
-          <label>{{ 'COMMON.EMAIL' | translate }}</label>
-          <input pInputText type="email" formControlName="email">
-        </div>
-
-        <div class="field">
-          <label>{{ 'COMMON.PHONE' | translate }}</label>
-          <input pInputText type="text" formControlName="phone">
-        </div>
+        <input id="firstName" pInputText type="text" formControlName="firstName" />
       </div>
 
-      <div class="actions">
-        <button
-          pButton
-          type="submit"
-          icon="pi pi-save"
-          [label]="'COMMON.SAVE' | translate">
-        </button>
+      <div class="form-field">
+        <label for="lastName">
+          {{ 'CUSTOMERS.LAST_NAME' | translate }}
+        </label>
+
+        <input id="lastName" pInputText type="text" formControlName="lastName" />
       </div>
-    </form>
-  </p-card>
-</div>
+
+      <div class="form-field">
+        <label for="email">
+          {{ 'COMMON.EMAIL' | translate }}
+        </label>
+
+        <input id="email" pInputText type="email" formControlName="email" />
+      </div>
+
+      <div class="form-field">
+        <label for="phone">
+          {{ 'COMMON.PHONE' | translate }}
+        </label>
+
+        <input id="phone" pInputText type="text" formControlName="phone" />
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button pButton type="submit" icon="pi pi-save" [label]="'COMMON.SAVE' | translate"></button>
+    </div>
+  </form>
+</p-card>

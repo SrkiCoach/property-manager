@@ -1,0 +1,34 @@
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.table-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.table-title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+}
+
+.empty-message {
+  padding: var(--spacing-xl);
+  text-align: center;
+  color: var(--app-text-muted);
+}
+
+@media (max-width: 650px) {
+  .table-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
