@@ -20,7 +20,9 @@
     "FIRST_NAME": "Όνομα",
     "LAST_NAME": "Επώνυμο",
     "NEW_CUSTOMER": "Νέος πελάτης",
-    "SAVE": "Αποθήκευση"
+    "SAVE": "Αποθήκευση",
+    "SAVED_SUCCESSFULLY": "Ο πελάτης αποθηκεύτηκε επιτυχώς.",
+    "SAVE_FAILED": "Δεν ήταν δυνατή η αποθήκευση του πελάτη."
   },
   "COMMON": {
     "EMAIL": "Email",
@@ -30,9 +32,13 @@
   "NAV": {
     "DASHBOARD": "Αρχική",
     "CUSTOMERS": "Πελάτες"
-},
+  },
   "DASHBOARD": {
     "TITLE": "Αρχική",
     "WELCOME": "Καλώς ήρθατε στη Διαχείριση Ακινήτων."
+  },
+  "MESSAGES": {
+    "SUCCESS": "Επιτυχία",
+    "ERROR": "Σφάλμα"
   }
 }

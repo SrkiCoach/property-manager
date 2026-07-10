@@ -1,12 +1,11 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
-import { CustomerList } from './features/customers/components/customer-list/customer-list';
-import { CustomerForm } from './features/customers/components/customer-form/customer-form'; 
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { AppHeader } from './shared/components/app-header/app-header';
 import { AppMenu } from './shared/components/app-menu/app-menu';
 
+import { ToastModule } from 'primeng/toast';
 interface HealthResponse {
   status: string;
   application: string;
@@ -15,28 +14,27 @@ interface HealthResponse {
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, AppHeader, AppMenu],
+  imports: [RouterOutlet, AppHeader, AppMenu, ToastModule],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
 export class App implements OnInit {
   protected readonly title = signal('frontend');
   health = signal<HealthResponse | null>(null);
 
-constructor(
-  private http: HttpClient,
-  private translate: TranslateService
-) {
-  this.translate.addLangs(['en', 'el']);
-  this.translate.setFallbackLang('en');
-  this.translate.use('en');
-}
+  constructor(
+    private http: HttpClient,
+    private translate: TranslateService,
+  ) {
+    this.translate.addLangs(['en', 'el']);
+    this.translate.setFallbackLang('en');
+    this.translate.use('en');
+  }
 
   ngOnInit(): void {
-    this.http.get<HealthResponse>('/api/health')
-      .subscribe(response => {
-        this.health.set(response);
-      });
+    this.http.get<HealthResponse>('/api/health').subscribe((response) => {
+      this.health.set(response);
+    });
   }
 
   changeLanguage(language: string): void {

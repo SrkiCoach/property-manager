@@ -7,6 +7,9 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card'; 
 import { InputTextModule } from 'primeng/inputtext'; 
 
+import { MessageService } from 'primeng/api';
+import { TranslateService } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-customer-form',
   imports: [
@@ -24,7 +27,9 @@ export class CustomerForm {
 
   constructor(
     private fb: FormBuilder,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private messageService: MessageService,
+    private translate: TranslateService
   ) {
     this.customerForm = this.fb.nonNullable.group({
       firstName: ['', [Validators.required, Validators.maxLength(50)]],
@@ -40,8 +45,24 @@ export class CustomerForm {
       return;
     }
 
-    this.customerService.create(this.customerForm.getRawValue()).subscribe(() => {
-      this.customerForm.reset();
+    this.customerService.create(this.customerForm.getRawValue()).subscribe({
+      next: (customer) => {
+        this.customerForm.reset();
+
+        this.messageService.add({
+          severity: 'success',
+          summary: this.translate.instant('MESSAGES.SUCCESS'),
+          detail: this.translate.instant('CUSTOMERS.SAVED_SUCCESSFULLY')
+        });
+      },
+      error: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: this.translate.instant('MESSAGES.ERROR'),
+          detail: this.translate.instant('CUSTOMERS.SAVE_FAILED')
+        });
+      }
     });
+    
   }
 }

@@ -20,7 +20,9 @@
     "FIRST_NAME": "First name",
     "LAST_NAME": "Last name",
     "NEW_CUSTOMER": "New customer",
-    "SAVE": "Save"
+    "SAVE": "Save",
+    "SAVED_SUCCESSFULLY": "Customer saved successfully.",
+    "SAVE_FAILED": "Customer could not be saved."
   },
   "COMMON": {
     "EMAIL": "Email",
@@ -28,11 +30,15 @@
     "SAVE": "Save"
   },
   "NAV": {
-  "DASHBOARD": "Dashboard",
-  "CUSTOMERS": "Customers"
+    "DASHBOARD": "Dashboard",
+    "CUSTOMERS": "Customers"
   },
   "DASHBOARD": {
     "TITLE": "Dashboard",
     "WELCOME": "Welcome to Property Manager."
+  },
+  "MESSAGES": {
+    "SUCCESS": "Success",
+    "ERROR": "Error"
   }
 }
