@@ -1,0 +1,19 @@
+{
+  "name": "Property Manager",
+  "image": "mcr.microsoft.com/devcontainers/java:1-21-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "24"
+    }
+  },
+  "forwardPorts": [4200, 8080],
+  "portsAttributes": {
+    "4200": {
+      "label": "Angular frontend"
+    },
+    "8080": {
+      "label": "Spring Boot backend"
+    }
+  },
+  "postCreateCommand": "cd frontend && npm install"
+}
