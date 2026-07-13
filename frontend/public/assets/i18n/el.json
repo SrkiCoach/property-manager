@@ -25,7 +25,14 @@
     "SAVE_FAILED": "Δεν ήταν δυνατή η αποθήκευση του πελάτη.",
     "ITEMS": "πελάτες",
     "EMPTY": "Δεν βρέθηκαν πελάτες.",
-    "SEARCH_PLACEHOLDER": "Αναζήτηση πελατών..."
+    "SEARCH_PLACEHOLDER": "Αναζήτηση πελατών...",
+    "EDIT_CUSTOMER": "Επεξεργασία πελάτη",
+    "UPDATED_SUCCESSFULLY": "Ο πελάτης ενημερώθηκε επιτυχώς.",
+    "UPDATE_FAILED": "Δεν ήταν δυνατή η ενημέρωση του πελάτη.",
+    "DELETE_CONFIRM_TITLE": "Διαγραφή πελάτη",
+    "DELETE_CONFIRM_MESSAGE": "Θέλετε σίγουρα να διαγράψετε τον πελάτη {{name}};",
+    "DELETED_SUCCESSFULLY": "Ο πελάτης διαγράφηκε επιτυχώς.",
+    "DELETE_FAILED": "Δεν ήταν δυνατή η διαγραφή του πελάτη."
   },
   "COMMON": {
     "EMAIL": "Email",
@@ -33,7 +40,9 @@
     "SAVE": "Αποθήκευση",
     "ACTIONS": "Ενέργειες",
     "EDIT": "Επεξεργασία",
-    "DELETE": "Διαγραφή"
+    "DELETE": "Διαγραφή",
+    "UPDATE": "Ενημέρωση",
+    "CANCEL": "Ακύρωση"
   },
   "NAV": {
     "DASHBOARD": "Αρχική",

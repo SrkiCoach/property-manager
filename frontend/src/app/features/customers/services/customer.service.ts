@@ -4,6 +4,7 @@ import { Observable, Subject, tap } from 'rxjs';
 import { Customer } from '../models/customer';
 import { CreateCustomerRequest } from '../models/create-customer-request';
 import { PagedResponse } from '../../../shared/models/paged-response';
+import { UpdateCustomerRequest } from '../models/update-customer-request';
 
 @Injectable({
   providedIn: 'root',
@@ -26,12 +27,24 @@ export class CustomerService {
       .pipe(tap(() => this.customerChangedSubject.next()));
   }
 
+  update(id: number, request: UpdateCustomerRequest): Observable<Customer> {
+    return this.http
+      .put<Customer>(`${this.apiUrl}/${id}`, request)
+      .pipe(tap(() => this.customerChangedSubject.next()));
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http
+      .delete<void>(`${this.apiUrl}/${id}`)
+      .pipe(tap(() => this.customerChangedSubject.next()));
+  }
+
   findPaged(
     page: number,
     size: number,
     sort: string,
     direction: 'asc' | 'desc',
-    search: string
+    search: string,
   ): Observable<PagedResponse<Customer>> {
     const params = new HttpParams()
       .set('page', page)

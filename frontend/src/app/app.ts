@@ -4,6 +4,7 @@ import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import { RouterOutlet } from '@angular/router';
 import { AppHeader } from './shared/components/app-header/app-header';
 import { AppMenu } from './shared/components/app-menu/app-menu';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { ToastModule } from 'primeng/toast';
 interface HealthResponse {
@@ -14,7 +15,7 @@ interface HealthResponse {
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, AppHeader, AppMenu, ToastModule],
+  imports: [RouterOutlet, AppHeader, AppMenu, ToastModule, ConfirmDialogModule],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

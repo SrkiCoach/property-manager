@@ -25,7 +25,14 @@
     "SAVE_FAILED": "Customer could not be saved.",
     "ITEMS": "customers",
     "EMPTY": "No customers were found.",
-    "SEARCH_PLACEHOLDER": "Search customers..."
+    "SEARCH_PLACEHOLDER": "Search customers...",
+    "EDIT_CUSTOMER": "Edit customer",
+    "UPDATED_SUCCESSFULLY": "Customer updated successfully.",
+    "UPDATE_FAILED": "Customer could not be updated.",
+    "DELETE_CONFIRM_TITLE": "Delete customer",
+    "DELETE_CONFIRM_MESSAGE": "Are you sure you want to delete {{name}}?",
+    "DELETED_SUCCESSFULLY": "Customer deleted successfully.",
+    "DELETE_FAILED": "Customer could not be deleted."
   },
   "COMMON": {
     "EMAIL": "Email",
@@ -33,7 +40,9 @@
     "SAVE": "Save",
     "ACTIONS": "Actions",
     "EDIT": "Edit",
-    "DELETE": "Delete"
+    "DELETE": "Delete",
+    "UPDATE": "Update",
+    "CANCEL": "Cancel"
   },
   "NAV": {
     "DASHBOARD": "Dashboard",

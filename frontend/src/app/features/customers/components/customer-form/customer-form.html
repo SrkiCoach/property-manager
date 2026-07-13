@@ -1,4 +1,4 @@
-<p-card [header]="'CUSTOMERS.NEW_CUSTOMER' | translate">
+<p-card [header]="(customer() ? 'CUSTOMERS.EDIT_CUSTOMER' : 'CUSTOMERS.NEW_CUSTOMER') | translate">
   <form [formGroup]="customerForm" (ngSubmit)="save()">
     <div class="form-grid">
       <div class="form-field">
@@ -35,7 +35,26 @@
     </div>
 
     <div class="form-actions">
-      <button pButton type="submit" icon="pi pi-save" [label]="'COMMON.SAVE' | translate"></button>
+      @if (customer()) {
+        <button
+          pButton
+          type="button"
+          severity="secondary"
+          [outlined]="true"
+          [disabled]="submitting()"
+          [label]="'COMMON.CANCEL' | translate"
+          (click)="cancel()"
+        ></button>
+      }
+
+      <button
+        pButton
+        type="submit"
+        icon="pi pi-save"
+        [loading]="submitting()"
+        [disabled]="submitting()"
+        [label]="(customer() ? 'COMMON.UPDATE' : 'COMMON.SAVE') | translate"
+      ></button>
     </div>
   </form>
 </p-card>

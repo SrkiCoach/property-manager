@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, effect, input, output, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CustomerService } from '../../services/customer.service';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -10,6 +10,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 
+import { Customer } from '../../models/customer';
+import { UpdateCustomerRequest } from '../../models/update-customer-request';
+
 @Component({
   selector: 'app-customer-form',
   imports: [ReactiveFormsModule, TranslatePipe, ButtonModule, CardModule, InputTextModule],
@@ -18,6 +21,13 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class CustomerForm {
   customerForm;
+
+  customer = input<Customer | null>(null);
+
+  saved = output<void>();
+  cancelled = output<void>();
+
+  submitting = signal(false);
 
   constructor(
     private fb: FormBuilder,
@@ -31,6 +41,21 @@ export class CustomerForm {
       email: ['', [Validators.email, Validators.maxLength(100)]],
       phone: ['', [Validators.maxLength(30)]],
     });
+
+    effect(() => {
+      const customer = this.customer();
+
+      if (customer) {
+        this.customerForm.setValue({
+          firstName: customer.firstName,
+          lastName: customer.lastName,
+          email: customer.email ?? '',
+          phone: customer.phone ?? '',
+        });
+      } else {
+        this.customerForm.reset();
+      }
+    });
   }
 
   save(): void {
@@ -39,23 +64,46 @@ export class CustomerForm {
       return;
     }
 
-    this.customerService.create(this.customerForm.getRawValue()).subscribe({
-      next: (customer) => {
+    const currentCustomer = this.customer();
+    const request = this.customerForm.getRawValue();
+
+    this.submitting.set(true);
+
+    const operation$ = currentCustomer
+      ? this.customerService.update(currentCustomer.id, request as UpdateCustomerRequest)
+      : this.customerService.create(request);
+
+    operation$.subscribe({
+      next: () => {
+        this.submitting.set(false);
         this.customerForm.reset();
 
         this.messageService.add({
           severity: 'success',
           summary: this.translate.instant('MESSAGES.SUCCESS'),
-          detail: this.translate.instant('CUSTOMERS.SAVED_SUCCESSFULLY'),
+          detail: this.translate.instant(
+            currentCustomer ? 'CUSTOMERS.UPDATED_SUCCESSFULLY' : 'CUSTOMERS.SAVED_SUCCESSFULLY',
+          ),
         });
+
+        this.saved.emit();
       },
       error: () => {
+        this.submitting.set(false);
+
         this.messageService.add({
           severity: 'error',
           summary: this.translate.instant('MESSAGES.ERROR'),
-          detail: this.translate.instant('CUSTOMERS.SAVE_FAILED'),
+          detail: this.translate.instant(
+            currentCustomer ? 'CUSTOMERS.UPDATE_FAILED' : 'CUSTOMERS.SAVE_FAILED',
+          ),
         });
       },
     });
+  }
+
+  cancel(): void {
+    this.customerForm.reset();
+    this.cancelled.emit();
   }
 }

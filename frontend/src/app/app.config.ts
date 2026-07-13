@@ -1,7 +1,7 @@
 import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
-  provideZoneChangeDetection
+  provideZoneChangeDetection,
 } from '@angular/core';
 
 import { provideRouter } from '@angular/router';
@@ -16,6 +16,7 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 
 import { MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -29,17 +30,19 @@ export const appConfig: ApplicationConfig = {
       fallbackLang: 'en',
       loader: provideTranslateHttpLoader({
         prefix: './assets/i18n/',
-        suffix: '.json'
-      })
+        suffix: '.json',
+      }),
     }),
     providePrimeNG({
       theme: {
         preset: Aura,
         options: {
-          darkModeSelector: false
-        }
-      }
+          darkModeSelector: false,
+        },
+      },
     }),
-    MessageService
-  ]
+
+    MessageService,
+    ConfirmationService,
+  ],
 };

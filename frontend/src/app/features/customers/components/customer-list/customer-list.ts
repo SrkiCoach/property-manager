@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, output, signal } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { TranslatePipe } from '@ngx-translate/core';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
@@ -10,6 +10,10 @@ import { CustomerService } from '../../services/customer.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { InputTextModule } from 'primeng/inputtext';
+
+import { ConfirmationService, MessageService } from 'primeng/api';
+
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-customer-list',
@@ -35,7 +39,14 @@ export class CustomerList implements OnInit, OnDestroy {
 
   private readonly destroy$ = new Subject<void>();
 
-  constructor(private customerService: CustomerService) {}
+  editRequested = output<Customer>();
+
+  constructor(
+    private customerService: CustomerService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
+    private translate: TranslateService,
+  ) {}
 
   ngOnInit(): void {
     this.customerService.customerChanged$.pipe(takeUntil(this.destroy$)).subscribe(() => {
@@ -68,11 +79,53 @@ export class CustomerList implements OnInit, OnDestroy {
   }
 
   editCustomer(customer: Customer): void {
-    console.log('Edit customer', customer);
+    console.log('Edit requested:', customer);
+    this.editRequested.emit(customer);
   }
 
   deleteCustomer(customer: Customer): void {
-    console.log('Delete customer', customer);
+    this.confirmationService.confirm({
+      header: this.translate.instant('CUSTOMERS.DELETE_CONFIRM_TITLE'),
+      message: this.translate.instant('CUSTOMERS.DELETE_CONFIRM_MESSAGE', {
+        name: `${customer.firstName} ${customer.lastName}`,
+      }),
+      icon: 'pi pi-exclamation-triangle',
+
+      acceptLabel: this.translate.instant('COMMON.DELETE'),
+      rejectLabel: this.translate.instant('COMMON.CANCEL'),
+
+      acceptButtonProps: {
+        severity: 'danger',
+      },
+
+      rejectButtonProps: {
+        severity: 'secondary',
+        outlined: true,
+      },
+
+      accept: () => {
+        this.performDelete(customer);
+      },
+    });
+  }
+
+  private performDelete(customer: Customer): void {
+    this.customerService.delete(customer.id).subscribe({
+      next: () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: this.translate.instant('MESSAGES.SUCCESS'),
+          detail: this.translate.instant('CUSTOMERS.DELETED_SUCCESSFULLY'),
+        });
+      },
+      error: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: this.translate.instant('MESSAGES.ERROR'),
+          detail: this.translate.instant('CUSTOMERS.DELETE_FAILED'),
+        });
+      },
+    });
   }
 
   private loadCurrentPage(): void {

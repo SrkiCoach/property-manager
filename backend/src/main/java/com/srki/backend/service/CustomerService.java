@@ -3,6 +3,7 @@ package com.srki.backend.service;
 import com.srki.backend.dto.CreateCustomerRequest;
 import com.srki.backend.dto.CustomerResponse;
 import com.srki.backend.dto.PagedResponse;
+import com.srki.backend.dto.UpdateCustomerRequest;
 import com.srki.backend.entity.Customer;
 import com.srki.backend.repository.CustomerRepository;
 import org.springframework.data.domain.Page;
@@ -10,6 +11,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import com.srki.backend.dto.UpdateCustomerRequest;
+import com.srki.backend.exception.CustomerNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -92,4 +96,31 @@ public class CustomerService {
                                 customer.getEmail(),
                                 customer.getPhone());
         }
+
+        @Transactional
+        public CustomerResponse update(
+                        Long id,
+                        UpdateCustomerRequest request) {
+                Customer customer = customerRepository.findById(id)
+                                .orElseThrow(() -> new CustomerNotFoundException(id));
+
+                customer.setFirstName(request.firstName());
+                customer.setLastName(request.lastName());
+                customer.setEmail(request.email());
+                customer.setPhone(request.phone());
+
+                Customer savedCustomer = customerRepository.save(customer);
+
+                return toResponse(savedCustomer);
+        }
+
+        @Transactional
+        public void delete(Long id) {
+                Customer customer = customerRepository.findById(id)
+                        .orElseThrow(() -> new CustomerNotFoundException(id));
+
+                customerRepository.delete(customer);
+
+        }
+
 }

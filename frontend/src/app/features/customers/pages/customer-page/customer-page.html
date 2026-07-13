@@ -1,7 +1,13 @@
 <section class="section">
-  <app-customer-form></app-customer-form>
+  <app-customer-form
+    [customer]="selectedCustomer()"
+    (saved)="clearSelection()"
+    (cancelled)="clearSelection()">
+  </app-customer-form>
 </section>
 
 <section class="section">
-  <app-customer-list></app-customer-list>
+  <app-customer-list
+    (editRequested)="editCustomer($event)">
+  </app-customer-list>
 </section>
