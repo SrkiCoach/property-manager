@@ -1,4 +1,4 @@
-import { Component, effect, input, output, signal } from '@angular/core';
+import { Component, effect, HostListener, input, output, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CustomerService } from '../../services/customer.service';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -68,13 +68,15 @@ export class CustomerForm {
     const request = this.customerForm.getRawValue();
 
     this.submitting.set(true);
+    this.customerForm.disable();
 
     const operation$ = currentCustomer
-      ? this.customerService.update(currentCustomer.id, request as UpdateCustomerRequest)
+      ? this.customerService.update(currentCustomer.id, request)
       : this.customerService.create(request);
 
     operation$.subscribe({
       next: () => {
+        this.customerForm.enable();
         this.submitting.set(false);
         this.customerForm.reset();
 
@@ -89,6 +91,7 @@ export class CustomerForm {
         this.saved.emit();
       },
       error: () => {
+        this.customerForm.enable();
         this.submitting.set(false);
 
         this.messageService.add({
@@ -100,6 +103,13 @@ export class CustomerForm {
         });
       },
     });
+  }
+
+  @HostListener('document:keydown.escape')
+  handleEscape(): void {
+    if (this.customer() && !this.submitting()) {
+      this.cancel();
+    }
   }
 
   cancel(): void {
