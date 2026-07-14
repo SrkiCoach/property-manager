@@ -55,5 +55,14 @@
   "MESSAGES": {
     "SUCCESS": "Success",
     "ERROR": "Error"
+  },
+  "FORM_INVALID": "Some fields contain invalid values.",
+  "SERVER_FIELD_ERROR": "The server rejected this value.",
+  "VALIDATION": {
+    "REQUIRED": "This field is required.",
+    "EMAIL": "Enter a valid email address.",
+    "MAX_LENGTH": "Maximum length is {{max}} characters.",
+    "FORM_INVALID": "Some fields contain invalid values.",
+    "SERVER_FIELD_ERROR": "The server rejected this value."
   }
 }

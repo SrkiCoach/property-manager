@@ -13,6 +13,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { Customer } from '../../models/customer';
 import { UpdateCustomerRequest } from '../../models/update-customer-request';
 
+import { HttpErrorResponse } from '@angular/common/http';
+import { ApiErrorResponse } from '../../../../shared/models/api-error-response';
+
+type CustomerField = 'firstName' | 'lastName' | 'email' | 'phone';
+
 @Component({
   selector: 'app-customer-form',
   imports: [ReactiveFormsModule, TranslatePipe, ButtonModule, CardModule, InputTextModule],
@@ -90,9 +95,23 @@ export class CustomerForm {
 
         this.saved.emit();
       },
-      error: () => {
+      error: (error: HttpErrorResponse) => {
         this.customerForm.enable();
         this.submitting.set(false);
+
+        const apiError = error.error as ApiErrorResponse | null;
+
+        if (error.status === 400 && apiError?.code === 'VALIDATION_FAILED') {
+          this.applyServerValidationErrors(apiError.fieldErrors);
+
+          this.messageService.add({
+            severity: 'error',
+            summary: this.translate.instant('MESSAGES.ERROR'),
+            detail: this.translate.instant('VALIDATION.FORM_INVALID'),
+          });
+
+          return;
+        }
 
         this.messageService.add({
           severity: 'error',
@@ -115,5 +134,37 @@ export class CustomerForm {
   cancel(): void {
     this.customerForm.reset();
     this.cancelled.emit();
+  }
+
+  private applyServerValidationErrors(fieldErrors: Record<string, string>): void {
+    for (const fieldName of Object.keys(fieldErrors)) {
+      if (this.isCustomerField(fieldName)) {
+        const control = this.customerForm.controls[fieldName];
+
+        control.setErrors({
+          ...control.errors,
+          server: true,
+        });
+
+        control.markAsTouched();
+      }
+    }
+  }
+
+  private isCustomerField(fieldName: string): fieldName is CustomerField {
+    return ['firstName', 'lastName', 'email', 'phone'].includes(fieldName);
+  }
+
+  clearServerError(fieldName: CustomerField): void {
+    const control = this.customerForm.controls[fieldName];
+
+    if (!control.hasError('server')) {
+      return;
+    }
+
+    const errors = { ...control.errors };
+    delete errors['server'];
+
+    control.setErrors(Object.keys(errors).length > 0 ? errors : null);
   }
 }
