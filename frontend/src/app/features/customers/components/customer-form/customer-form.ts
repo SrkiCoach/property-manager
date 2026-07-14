@@ -11,12 +11,20 @@ import { MessageService } from 'primeng/api';
 import { TranslateService } from '@ngx-translate/core';
 
 import { Customer } from '../../models/customer';
-import { UpdateCustomerRequest } from '../../models/update-customer-request';
 
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApiErrorResponse } from '../../../../shared/models/api-error-response';
 
-type CustomerField = 'firstName' | 'lastName' | 'email' | 'phone';
+import { finalize } from 'rxjs';
+
+type CustomerFormValue = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+};
+
+type CustomerField = keyof CustomerFormValue;
 
 @Component({
   selector: 'app-customer-form',
@@ -79,49 +87,28 @@ export class CustomerForm {
       ? this.customerService.update(currentCustomer.id, request)
       : this.customerService.create(request);
 
-    operation$.subscribe({
-      next: () => {
-        this.customerForm.enable();
-        this.submitting.set(false);
-        this.customerForm.reset();
+    operation$
+      .pipe(
+        finalize(() => {
+          this.customerForm.enable();
+          this.submitting.set(false);
+        }),
+      )
+      .subscribe({
+        next: () => {
+          this.customerForm.reset();
 
-        this.messageService.add({
-          severity: 'success',
-          summary: this.translate.instant('MESSAGES.SUCCESS'),
-          detail: this.translate.instant(
+          this.showSuccessMessage(
             currentCustomer ? 'CUSTOMERS.UPDATED_SUCCESSFULLY' : 'CUSTOMERS.SAVED_SUCCESSFULLY',
-          ),
-        });
+          );
 
-        this.saved.emit();
-      },
-      error: (error: HttpErrorResponse) => {
-        this.customerForm.enable();
-        this.submitting.set(false);
+          this.saved.emit();
+        },
 
-        const apiError = error.error as ApiErrorResponse | null;
-
-        if (error.status === 400 && apiError?.code === 'VALIDATION_FAILED') {
-          this.applyServerValidationErrors(apiError.fieldErrors);
-
-          this.messageService.add({
-            severity: 'error',
-            summary: this.translate.instant('MESSAGES.ERROR'),
-            detail: this.translate.instant('VALIDATION.FORM_INVALID'),
-          });
-
-          return;
-        }
-
-        this.messageService.add({
-          severity: 'error',
-          summary: this.translate.instant('MESSAGES.ERROR'),
-          detail: this.translate.instant(
-            currentCustomer ? 'CUSTOMERS.UPDATE_FAILED' : 'CUSTOMERS.SAVE_FAILED',
-          ),
-        });
-      },
-    });
+        error: (error: HttpErrorResponse) => {
+          this.handleSaveError(error, currentCustomer !== null);
+        },
+      });
   }
 
   @HostListener('document:keydown.escape')
@@ -166,5 +153,33 @@ export class CustomerForm {
     delete errors['server'];
 
     control.setErrors(Object.keys(errors).length > 0 ? errors : null);
+  }
+
+  private showSuccessMessage(detailKey: string): void {
+    this.messageService.add({
+      severity: 'success',
+      summary: this.translate.instant('MESSAGES.SUCCESS'),
+      detail: this.translate.instant(detailKey),
+    });
+  }
+
+  private showErrorMessage(detailKey: string): void {
+    this.messageService.add({
+      severity: 'error',
+      summary: this.translate.instant('MESSAGES.ERROR'),
+      detail: this.translate.instant(detailKey),
+    });
+  }
+
+  private handleSaveError(error: HttpErrorResponse, isEditMode: boolean): void {
+    const apiError = error.error as ApiErrorResponse | null;
+
+    if (error.status === 400 && apiError?.code === 'VALIDATION_FAILED') {
+      this.applyServerValidationErrors(apiError.fieldErrors);
+      this.showErrorMessage('VALIDATION.FORM_INVALID');
+      return;
+    }
+
+    this.showErrorMessage(isEditMode ? 'CUSTOMERS.UPDATE_FAILED' : 'CUSTOMERS.SAVE_FAILED');
   }
 }
