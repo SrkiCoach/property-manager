@@ -7,8 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 
-import { MessageService } from 'primeng/api';
-import { TranslateService } from '@ngx-translate/core';
+import { AppNotificationService } from '../../../../core/services/app-notification.service';
 
 import { Customer } from '../../models/customer';
 
@@ -45,8 +44,7 @@ export class CustomerForm {
   constructor(
     private fb: FormBuilder,
     private customerService: CustomerService,
-    private messageService: MessageService,
-    private translate: TranslateService,
+    private notificationService: AppNotificationService,
   ) {
     this.customerForm = this.fb.nonNullable.group({
       firstName: ['', [Validators.required, Validators.maxLength(50)]],
@@ -98,7 +96,7 @@ export class CustomerForm {
         next: () => {
           this.customerForm.reset();
 
-          this.showSuccessMessage(
+          this.notificationService.success(
             currentCustomer ? 'CUSTOMERS.UPDATED_SUCCESSFULLY' : 'CUSTOMERS.SAVED_SUCCESSFULLY',
           );
 
@@ -155,31 +153,17 @@ export class CustomerForm {
     control.setErrors(Object.keys(errors).length > 0 ? errors : null);
   }
 
-  private showSuccessMessage(detailKey: string): void {
-    this.messageService.add({
-      severity: 'success',
-      summary: this.translate.instant('MESSAGES.SUCCESS'),
-      detail: this.translate.instant(detailKey),
-    });
-  }
-
-  private showErrorMessage(detailKey: string): void {
-    this.messageService.add({
-      severity: 'error',
-      summary: this.translate.instant('MESSAGES.ERROR'),
-      detail: this.translate.instant(detailKey),
-    });
-  }
-
   private handleSaveError(error: HttpErrorResponse, isEditMode: boolean): void {
     const apiError = error.error as ApiErrorResponse | null;
 
     if (error.status === 400 && apiError?.code === 'VALIDATION_FAILED') {
       this.applyServerValidationErrors(apiError.fieldErrors);
-      this.showErrorMessage('VALIDATION.FORM_INVALID');
+      this.notificationService.error('VALIDATION.FORM_INVALID');
       return;
     }
 
-    this.showErrorMessage(isEditMode ? 'CUSTOMERS.UPDATE_FAILED' : 'CUSTOMERS.SAVE_FAILED');
+    this.notificationService.error(
+      isEditMode ? 'CUSTOMERS.UPDATE_FAILED' : 'CUSTOMERS.SAVE_FAILED',
+    );
   }
 }

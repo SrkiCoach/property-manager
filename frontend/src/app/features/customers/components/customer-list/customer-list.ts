@@ -11,8 +11,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { InputTextModule } from 'primeng/inputtext';
 
-import { ConfirmationService, MessageService } from 'primeng/api';
-
+import { ConfirmationService } from 'primeng/api';
+import { AppNotificationService } from '../../../../core/services/app-notification.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -42,10 +42,10 @@ export class CustomerList implements OnInit, OnDestroy {
   editRequested = output<Customer>();
 
   constructor(
-    private customerService: CustomerService,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService,
-    private translate: TranslateService,
+    private readonly customerService: CustomerService,
+    private readonly confirmationService: ConfirmationService,
+    private readonly notificationService: AppNotificationService,
+    private readonly translate: TranslateService,
   ) {}
 
   ngOnInit(): void {
@@ -112,18 +112,10 @@ export class CustomerList implements OnInit, OnDestroy {
   private performDelete(customer: Customer): void {
     this.customerService.delete(customer.id).subscribe({
       next: () => {
-        this.messageService.add({
-          severity: 'success',
-          summary: this.translate.instant('MESSAGES.SUCCESS'),
-          detail: this.translate.instant('CUSTOMERS.DELETED_SUCCESSFULLY'),
-        });
+        this.notificationService.success('CUSTOMERS.DELETED_SUCCESSFULLY');
       },
       error: () => {
-        this.messageService.add({
-          severity: 'error',
-          summary: this.translate.instant('MESSAGES.ERROR'),
-          detail: this.translate.instant('CUSTOMERS.DELETE_FAILED'),
-        });
+        this.notificationService.error('CUSTOMERS.DELETE_FAILED');
       },
     });
   }
