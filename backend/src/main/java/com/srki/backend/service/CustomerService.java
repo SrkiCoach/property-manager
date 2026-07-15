@@ -16,11 +16,23 @@ import com.srki.backend.exception.CustomerNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CustomerService {
 
         private final CustomerRepository customerRepository;
+
+        private static final Set<String> ALLOWED_SORT_FIELDS = Set.of(
+                        "id",
+                        "firstName",
+                        "lastName",
+                        "email",
+                        "phone");
+
+        private static final String DEFAULT_SORT_FIELD = "lastName";
+        private static final int DEFAULT_PAGE_SIZE = 5;
+        private static final int MAX_PAGE_SIZE = 100;
 
         public CustomerService(CustomerRepository customerRepository) {
                 this.customerRepository = customerRepository;
@@ -39,14 +51,25 @@ public class CustomerService {
                         String sort,
                         String direction,
                         String search) {
+
+                int safePage = Math.max(page, 0);
+
+                int safeSize = size <= 0
+                                ? DEFAULT_PAGE_SIZE
+                                : Math.min(size, MAX_PAGE_SIZE);
+
+                String safeSort = ALLOWED_SORT_FIELDS.contains(sort)
+                                ? sort
+                                : DEFAULT_SORT_FIELD;
+
                 Sort.Direction sortDirection = "desc".equalsIgnoreCase(direction)
                                 ? Sort.Direction.DESC
                                 : Sort.Direction.ASC;
 
                 Pageable pageable = PageRequest.of(
-                                page,
-                                size,
-                                Sort.by(sortDirection, sort));
+                                safePage,
+                                safeSize,
+                                Sort.by(sortDirection, safeSort));
 
                 Page<Customer> customerPage;
 
@@ -117,7 +140,7 @@ public class CustomerService {
         @Transactional
         public void delete(Long id) {
                 Customer customer = customerRepository.findById(id)
-                        .orElseThrow(() -> new CustomerNotFoundException(id));
+                                .orElseThrow(() -> new CustomerNotFoundException(id));
 
                 customerRepository.delete(customer);
 
