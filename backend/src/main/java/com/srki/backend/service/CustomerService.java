@@ -38,13 +38,6 @@ public class CustomerService {
                 this.customerRepository = customerRepository;
         }
 
-        public List<CustomerResponse> findAll() {
-                return customerRepository.findAll()
-                                .stream()
-                                .map(this::toResponse)
-                                .toList();
-        }
-
         public PagedResponse<CustomerResponse> findPaged(
                         int page,
                         int size,

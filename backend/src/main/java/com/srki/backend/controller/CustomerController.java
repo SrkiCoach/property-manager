@@ -28,11 +28,6 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping("/api/customers")
-    public List<CustomerResponse> findAll() {
-        return customerService.findAll();
-    }
-
     @GetMapping("/api/customers/paged")
     public PagedResponse<CustomerResponse> findPaged(
             @RequestParam(defaultValue = "0") int page,
