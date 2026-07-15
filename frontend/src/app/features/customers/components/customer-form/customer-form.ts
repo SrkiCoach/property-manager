@@ -16,14 +16,10 @@ import { ApiErrorResponse } from '../../../../shared/models/api-error-response';
 
 import { finalize } from 'rxjs';
 
-type CustomerFormValue = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-};
-
-type CustomerField = keyof CustomerFormValue;
+import {
+  applyServerFieldErrors,
+  clearServerFieldError,
+} from '../../../../shared/utils/form-errors.util';
 
 @Component({
   selector: 'app-customer-form',
@@ -121,43 +117,15 @@ export class CustomerForm {
     this.cancelled.emit();
   }
 
-  private applyServerValidationErrors(fieldErrors: Record<string, string>): void {
-    for (const fieldName of Object.keys(fieldErrors)) {
-      if (this.isCustomerField(fieldName)) {
-        const control = this.customerForm.controls[fieldName];
-
-        control.setErrors({
-          ...control.errors,
-          server: true,
-        });
-
-        control.markAsTouched();
-      }
-    }
-  }
-
-  private isCustomerField(fieldName: string): fieldName is CustomerField {
-    return ['firstName', 'lastName', 'email', 'phone'].includes(fieldName);
-  }
-
-  clearServerError(fieldName: CustomerField): void {
-    const control = this.customerForm.controls[fieldName];
-
-    if (!control.hasError('server')) {
-      return;
-    }
-
-    const errors = { ...control.errors };
-    delete errors['server'];
-
-    control.setErrors(Object.keys(errors).length > 0 ? errors : null);
+  clearServerError(fieldName: keyof typeof this.customerForm.controls): void {
+    clearServerFieldError(this.customerForm.controls[fieldName]);
   }
 
   private handleSaveError(error: HttpErrorResponse, isEditMode: boolean): void {
     const apiError = error.error as ApiErrorResponse | null;
 
     if (error.status === 400 && apiError?.code === 'VALIDATION_FAILED') {
-      this.applyServerValidationErrors(apiError.fieldErrors);
+      applyServerFieldErrors(this.customerForm, apiError.fieldErrors);
       this.notificationService.error('VALIDATION.FORM_INVALID');
       return;
     }
