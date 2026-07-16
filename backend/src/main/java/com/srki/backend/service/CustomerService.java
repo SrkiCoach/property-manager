@@ -117,8 +117,7 @@ public class CustomerService {
         public CustomerResponse update(
                         Long id,
                         UpdateCustomerRequest request) {
-                Customer customer = customerRepository.findById(id)
-                                .orElseThrow(() -> new CustomerNotFoundException(id));
+                Customer customer = getCustomer(id);
 
                 customer.setFirstName(request.firstName());
                 customer.setLastName(request.lastName());
@@ -132,11 +131,14 @@ public class CustomerService {
 
         @Transactional
         public void delete(Long id) {
-                Customer customer = customerRepository.findById(id)
-                                .orElseThrow(() -> new CustomerNotFoundException(id));
-
+                Customer customer = getCustomer(id);
                 customerRepository.delete(customer);
 
+        }
+
+        private Customer getCustomer(Long customerId) {
+                return customerRepository.findById(customerId)
+                                .orElseThrow(() -> new CustomerNotFoundException(customerId));
         }
 
 }

@@ -48,9 +48,7 @@ public class PropertyService {
 
         @Transactional
         public PropertyResponse create(CreatePropertyRequest request) {
-                Customer customer = customerRepository.findById(request.customerId())
-                                .orElseThrow(
-                                                () -> new CustomerNotFoundException(request.customerId()));
+                Customer customer = getCustomer(request.customerId());
 
                 Property property = new Property(
                                 customer,
@@ -136,8 +134,7 @@ public class PropertyService {
 
         @Transactional(readOnly = true)
         public PropertyResponse findById(Long id) {
-                Property property = propertyRepository.findById(id)
-                                .orElseThrow(() -> new PropertyNotFoundException(id));
+                Property property = getProperty(id);
 
                 return toResponse(property);
         }
@@ -146,12 +143,9 @@ public class PropertyService {
         public PropertyResponse update(
                         Long id,
                         UpdatePropertyRequest request) {
-                Property property = propertyRepository.findById(id)
-                                .orElseThrow(() -> new PropertyNotFoundException(id));
+                Property property = getProperty(id);
 
-                Customer customer = customerRepository.findById(request.customerId())
-                                .orElseThrow(
-                                                () -> new CustomerNotFoundException(request.customerId()));
+                Customer customer = getCustomer(request.customerId());
 
                 property.setCustomer(customer);
                 property.setTitle(request.title());
@@ -167,10 +161,18 @@ public class PropertyService {
 
         @Transactional
         public void delete(Long id) {
-                Property property = propertyRepository.findById(id)
-                                .orElseThrow(() -> new PropertyNotFoundException(id));
-
+                Property property = getProperty(id);
                 propertyRepository.delete(property);
+        }
+
+        private Property getProperty(Long id) {
+                return propertyRepository.findById(id)
+                                .orElseThrow(() -> new PropertyNotFoundException(id));
+        }
+
+        private Customer getCustomer(Long customerId) {
+                return customerRepository.findById(customerId)
+                                .orElseThrow(() -> new CustomerNotFoundException(customerId));
         }
 
 }
