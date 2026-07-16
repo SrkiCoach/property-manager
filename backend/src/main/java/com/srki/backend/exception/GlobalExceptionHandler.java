@@ -7,47 +7,61 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.srki.backend.exception.PropertyNotFoundException;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(CustomerNotFoundException.class)
-    public ResponseEntity<ApiErrorResponse> handleCustomerNotFound(
-            CustomerNotFoundException exception) {
-        ApiErrorResponse response = new ApiErrorResponse(
-                "CUSTOMER_NOT_FOUND",
-                exception.getMessage(),
-                Map.of(),
-                Instant.now());
+        @ExceptionHandler(CustomerNotFoundException.class)
+        public ResponseEntity<ApiErrorResponse> handleCustomerNotFound(
+                        CustomerNotFoundException exception) {
+                ApiErrorResponse response = new ApiErrorResponse(
+                                "CUSTOMER_NOT_FOUND",
+                                exception.getMessage(),
+                                Map.of(),
+                                Instant.now());
 
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(response);
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiErrorResponse> handleValidation(
-            MethodArgumentNotValidException exception) {
-        Map<String, String> fieldErrors = new LinkedHashMap<>();
-
-        for (FieldError fieldError : exception.getBindingResult().getFieldErrors()) {
-            fieldErrors.putIfAbsent(
-                    fieldError.getField(),
-                    fieldError.getDefaultMessage());
+                return ResponseEntity
+                                .status(HttpStatus.NOT_FOUND)
+                                .body(response);
         }
 
-        ApiErrorResponse response = new ApiErrorResponse(
-                "VALIDATION_FAILED",
-                "Request validation failed",
-                fieldErrors,
-                Instant.now());
+        @ExceptionHandler(MethodArgumentNotValidException.class)
+        public ResponseEntity<ApiErrorResponse> handleValidation(
+                        MethodArgumentNotValidException exception) {
+                Map<String, String> fieldErrors = new LinkedHashMap<>();
 
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(response);
-    }
+                for (FieldError fieldError : exception.getBindingResult().getFieldErrors()) {
+                        fieldErrors.putIfAbsent(
+                                        fieldError.getField(),
+                                        fieldError.getDefaultMessage());
+                }
+
+                ApiErrorResponse response = new ApiErrorResponse(
+                                "VALIDATION_FAILED",
+                                "Request validation failed",
+                                fieldErrors,
+                                Instant.now());
+
+                return ResponseEntity
+                                .status(HttpStatus.BAD_REQUEST)
+                                .body(response);
+        }
+
+        @ExceptionHandler(PropertyNotFoundException.class)
+        @ResponseStatus(HttpStatus.NOT_FOUND)
+        public ApiErrorResponse handlePropertyNotFound(
+                        PropertyNotFoundException exception) {
+                return new ApiErrorResponse(
+                                "PROPERTY_NOT_FOUND",
+                                exception.getMessage(),
+                                Map.of(),
+                                Instant.now());
+        }
 }
