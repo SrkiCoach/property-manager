@@ -13,13 +13,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import com.srki.backend.customer.dto.CustomerLookupResponse;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/customers")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -28,7 +31,7 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping("/api/customers/paged")
+    @GetMapping("/paged")
     public PagedResponse<CustomerResponse> findPaged(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
@@ -43,22 +46,27 @@ public class CustomerController {
                 search);
     }
 
-    @PostMapping("/api/customers")
+    @PostMapping
     public CustomerResponse create(
             @Valid @RequestBody CreateCustomerRequest request) {
         return customerService.create(request);
     }
 
-    @PutMapping("/api/customers/{id}")
+    @PutMapping("/{id}")
     public CustomerResponse update(
             @PathVariable Long id,
             @Valid @RequestBody UpdateCustomerRequest request) {
         return customerService.update(id, request);
     }
 
-    @DeleteMapping("/api/customers/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         customerService.delete(id);
+    }
+
+    @GetMapping("/lookup")
+    public List<CustomerLookupResponse> getCustomerLookup() {
+        return customerService.findAllForLookup();
     }
 }

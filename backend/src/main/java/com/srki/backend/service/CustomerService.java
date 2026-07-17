@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.srki.backend.dto.UpdateCustomerRequest;
 import com.srki.backend.exception.CustomerNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
+import com.srki.backend.customer.dto.CustomerLookupResponse;
 
 import java.util.List;
 import java.util.Set;
@@ -139,6 +140,10 @@ public class CustomerService {
         private Customer getCustomer(Long customerId) {
                 return customerRepository.findById(customerId)
                                 .orElseThrow(() -> new CustomerNotFoundException(customerId));
+        }
+
+        public List<CustomerLookupResponse> findAllForLookup() {
+                return customerRepository.findAllForLookup();
         }
 
 }

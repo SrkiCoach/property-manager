@@ -1,0 +1,13 @@
+<section class="section">
+  <app-property-form
+    [property]="selectedProperty()"
+    (saved)="clearSelection()"
+    (cancelled)="clearSelection()">
+  </app-property-form>
+</section>
+
+<section class="section">
+  <app-property-list
+    (editRequested)="editProperty($event)">
+  </app-property-list>
+</section>
