@@ -5,6 +5,7 @@ import { Customer } from '../models/customer';
 import { CreateCustomerRequest } from '../models/create-customer-request';
 import { PagedResponse } from '../../../shared/models/paged-response';
 import { UpdateCustomerRequest } from '../models/update-customer-request';
+import { CustomerLookup } from '../models/customer-lookup';
 
 @Injectable({
   providedIn: 'root',
@@ -50,5 +51,9 @@ export class CustomerService {
       .set('search', search);
 
     return this.http.get<PagedResponse<Customer>>(`${this.apiUrl}/paged`, { params });
+  }
+
+  findAllForLookup(): Observable<CustomerLookup[]> {
+    return this.http.get<CustomerLookup[]>(`${this.apiUrl}/lookup`);
   }
 }

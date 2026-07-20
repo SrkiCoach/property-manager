@@ -46,7 +46,8 @@
   },
   "NAV": {
     "DASHBOARD": "Dashboard",
-    "CUSTOMERS": "Customers"
+    "CUSTOMERS": "Customers",
+    "PROPERTIES": "Properties"
   },
   "DASHBOARD": {
     "TITLE": "Dashboard",
@@ -64,5 +65,39 @@
     "MAX_LENGTH": "Maximum length is {{max}} characters.",
     "FORM_INVALID": "Some fields contain invalid values.",
     "SERVER_FIELD_ERROR": "The server rejected this value."
+  },
+  "PROPERTIES": {
+    "TITLE": "Properties",
+    "ITEMS": "properties",
+    "EMPTY": "No properties found",
+
+    "NEW_PROPERTY": "New Property",
+    "EDIT_PROPERTY": "Edit Property",
+    "PROPERTY": "Property",
+
+    "PROPERTY_TITLE": "Title",
+    "CUSTOMER": "Customer",
+    "SELECT_CUSTOMER": "Select customer...",
+    "ADDRESS": "Address",
+    "CITY": "City",
+    "COUNTRY": "Country",
+    "NOTES": "Notes",
+
+    "SEARCH_PLACEHOLDER": "Search properties...",
+
+    "SAVED_SUCCESSFULLY": "Property created successfully.",
+    "UPDATED_SUCCESSFULLY": "Property updated successfully.",
+    "DELETED_SUCCESSFULLY": "Property deleted successfully.",
+
+    "SAVE_FAILED": "Failed to create property.",
+    "UPDATE_FAILED": "Failed to update property.",
+    "DELETE_FAILED": "Failed to delete property.",
+    "LOAD_FAILED": "Failed to load properties.",
+    "CUSTOMER_LOOKUP_LOAD_FAILED": "Failed to load customers.",
+
+    "DELETE_CONFIRM_TITLE": "Delete Property",
+    "DELETE_CONFIRM_MESSAGE": "Are you sure you want to delete {{title}}?",
+
+    "ID": "ID"
   }
 }

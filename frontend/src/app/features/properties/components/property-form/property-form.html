@@ -1,1 +1,209 @@
-<p>Property form works.</p>
+<p-card
+  [header]="(property() ? 'PROPERTIES.EDIT_PROPERTY' : 'PROPERTIES.NEW_PROPERTY') | translate"
+>
+  <form [formGroup]="propertyForm" (ngSubmit)="save()">
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="customerId">
+          {{ 'PROPERTIES.CUSTOMER' | translate }}
+        </label>
+
+        <p-select
+          inputId="customerId"
+          formControlName="customerId"
+          [options]="customers()"
+          optionLabel="fullName"
+          optionValue="id"
+          [loading]="loadingCustomers()"
+          [placeholder]="'PROPERTIES.SELECT_CUSTOMER' | translate"
+          [showClear]="true"
+          appendTo="body"
+          class="w-full"
+          (onChange)="clearServerError('customerId')"
+        />
+
+        @if (propertyForm.controls.customerId.invalid && propertyForm.controls.customerId.touched) {
+          <small class="error-message">
+            @if (propertyForm.controls.customerId.hasError('required')) {
+              {{ 'VALIDATION.REQUIRED' | translate }}
+            }
+
+            @if (propertyForm.controls.customerId.hasError('min')) {
+              {{ 'VALIDATION.REQUIRED' | translate }}
+            }
+
+            @if (propertyForm.controls.customerId.hasError('serverError')) {
+              {{ propertyForm.controls.customerId.getError('serverError') }}
+            }
+          </small>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="title">
+          {{ 'PROPERTIES.PROPERTY_TITLE' | translate }}
+        </label>
+
+        <input
+          pInputText
+          id="title"
+          type="text"
+          formControlName="title"
+          class="w-full"
+          (input)="clearServerError('title')"
+        />
+
+        @if (propertyForm.controls.title.invalid && propertyForm.controls.title.touched) {
+          <small class="error-message">
+            @if (propertyForm.controls.title.hasError('required')) {
+              {{ 'VALIDATION.REQUIRED' | translate }}
+            }
+
+            @if (propertyForm.controls.title.hasError('maxlength')) {
+              {{ 'VALIDATION.MAX_LENGTH' | translate: { max: 100 } }}
+            }
+
+            @if (propertyForm.controls.title.hasError('serverError')) {
+              {{ propertyForm.controls.title.getError('serverError') }}
+            }
+          </small>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="address">
+          {{ 'PROPERTIES.ADDRESS' | translate }}
+        </label>
+
+        <input
+          pInputText
+          id="address"
+          type="text"
+          formControlName="address"
+          class="w-full"
+          (input)="clearServerError('address')"
+        />
+
+        @if (propertyForm.controls.address.invalid && propertyForm.controls.address.touched) {
+          <small class="error-message">
+            @if (propertyForm.controls.address.hasError('required')) {
+              {{ 'VALIDATION.REQUIRED' | translate }}
+            }
+
+            @if (propertyForm.controls.address.hasError('maxlength')) {
+              {{ 'VALIDATION.MAX_LENGTH' | translate: { max: 200 } }}
+            }
+
+            @if (propertyForm.controls.address.hasError('serverError')) {
+              {{ propertyForm.controls.address.getError('serverError') }}
+            }
+          </small>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="city">
+          {{ 'PROPERTIES.CITY' | translate }}
+        </label>
+
+        <input
+          pInputText
+          id="city"
+          type="text"
+          formControlName="city"
+          class="w-full"
+          (input)="clearServerError('city')"
+        />
+
+        @if (propertyForm.controls.city.invalid && propertyForm.controls.city.touched) {
+          <small class="error-message">
+            @if (propertyForm.controls.city.hasError('maxlength')) {
+              {{ 'VALIDATION.MAX_LENGTH' | translate: { max: 100 } }}
+            }
+
+            @if (propertyForm.controls.city.hasError('serverError')) {
+              {{ propertyForm.controls.city.getError('serverError') }}
+            }
+          </small>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="country">
+          {{ 'PROPERTIES.COUNTRY' | translate }}
+        </label>
+
+        <input
+          pInputText
+          id="country"
+          type="text"
+          formControlName="country"
+          class="w-full"
+          (input)="clearServerError('country')"
+        />
+
+        @if (propertyForm.controls.country.invalid && propertyForm.controls.country.touched) {
+          <small class="error-message">
+            @if (propertyForm.controls.country.hasError('maxlength')) {
+              {{ 'VALIDATION.MAX_LENGTH' | translate: { max: 100 } }}
+            }
+
+            @if (propertyForm.controls.country.hasError('serverError')) {
+              {{ propertyForm.controls.country.getError('serverError') }}
+            }
+          </small>
+        }
+      </div>
+
+      <div class="form-field form-field-full">
+        <label for="notes">
+          {{ 'PROPERTIES.NOTES' | translate }}
+        </label>
+
+        <textarea
+          pTextarea
+          id="notes"
+          rows="5"
+          formControlName="notes"
+          class="w-full"
+          (input)="clearServerError('notes')"
+        ></textarea>
+
+        @if (propertyForm.controls.notes.invalid && propertyForm.controls.notes.touched) {
+          <small class="error-message">
+            @if (propertyForm.controls.notes.hasError('maxlength')) {
+              {{ 'VALIDATION.MAX_LENGTH' | translate: { max: 1000 } }}
+            }
+
+            @if (propertyForm.controls.notes.hasError('serverError')) {
+              {{ propertyForm.controls.notes.getError('serverError') }}
+            }
+          </small>
+        }
+      </div>
+    </div>
+
+    <div class="form-actions">
+      @if (property()) {
+        <button
+          pButton
+          type="button"
+          severity="secondary"
+          [outlined]="true"
+          [disabled]="submitting()"
+          [label]="'COMMON.CANCEL' | translate"
+          (click)="cancel()"
+        ></button>
+      }
+
+      <button
+        pButton
+        type="submit"
+        icon="pi pi-save"
+        [loading]="submitting()"
+        [disabled]="submitting() || loadingCustomers()"
+        [label]="(property() ? 'COMMON.UPDATE' : 'COMMON.SAVE') | translate"
+      ></button>
+    </div>
+  </form>
+</p-card>

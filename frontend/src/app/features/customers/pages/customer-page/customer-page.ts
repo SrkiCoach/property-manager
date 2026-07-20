@@ -14,8 +14,6 @@ export class CustomerPage {
   selectedCustomer = signal<Customer | null>(null);
 
   editCustomer(customer: Customer): void {
-    console.log('Customer page received:', customer);
-
     this.selectedCustomer.set(customer);
 
     window.scrollTo({

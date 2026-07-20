@@ -46,7 +46,8 @@
   },
   "NAV": {
     "DASHBOARD": "Αρχική",
-    "CUSTOMERS": "Πελάτες"
+    "CUSTOMERS": "Πελάτες",
+    "PROPERTIES": "Ακίνητα"
   },
   "DASHBOARD": {
     "TITLE": "Αρχική",
@@ -64,5 +65,39 @@
     "MAX_LENGTH": "Ο μέγιστος αριθμός χαρακτήρων είναι {{max}}.",
     "FORM_INVALID": "Ορισμένα πεδία περιέχουν μη έγκυρες τιμές.",
     "SERVER_FIELD_ERROR": "Ο διακομιστής απέρριψε αυτή την τιμή."
+  },
+  "PROPERTIES": {
+    "TITLE": "Ακίνητα",
+    "ITEMS": "ακίνητα",
+    "EMPTY": "Δεν βρέθηκαν ακίνητα",
+
+    "NEW_PROPERTY": "Νέο Ακίνητο",
+    "EDIT_PROPERTY": "Επεξεργασία Ακινήτου",
+    "PROPERTY": "Ακίνητο",
+
+    "PROPERTY_TITLE": "Τίτλος",
+    "CUSTOMER": "Πελάτης",
+    "SELECT_CUSTOMER": "Επιλέξτε πελάτη...",
+    "ADDRESS": "Διεύθυνση",
+    "CITY": "Πόλη",
+    "COUNTRY": "Χώρα",
+    "NOTES": "Σημειώσεις",
+
+    "SEARCH_PLACEHOLDER": "Αναζήτηση ακινήτων...",
+
+    "SAVED_SUCCESSFULLY": "Το ακίνητο αποθηκεύτηκε επιτυχώς.",
+    "UPDATED_SUCCESSFULLY": "Το ακίνητο ενημερώθηκε επιτυχώς.",
+    "DELETED_SUCCESSFULLY": "Το ακίνητο διαγράφηκε επιτυχώς.",
+
+    "SAVE_FAILED": "Αποτυχία αποθήκευσης ακινήτου.",
+    "UPDATE_FAILED": "Αποτυχία ενημέρωσης ακινήτου.",
+    "DELETE_FAILED": "Αποτυχία διαγραφής ακινήτου.",
+    "LOAD_FAILED": "Αποτυχία φόρτωσης ακινήτων.",
+    "CUSTOMER_LOOKUP_LOAD_FAILED": "Αποτυχία φόρτωσης πελατών.",
+
+    "DELETE_CONFIRM_TITLE": "Διαγραφή Ακινήτου",
+    "DELETE_CONFIRM_MESSAGE": "Θέλετε σίγουρα να διαγράψετε το {{title}};",
+
+    "ID": "ID"
   }
 }

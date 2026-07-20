@@ -14,8 +14,6 @@ export class PropertyPage {
   selectedProperty = signal<Property | null>(null);
 
   editProperty(property: Property): void {
-    console.log('Property page received:', property);
-
     this.selectedProperty.set(property);
 
     window.scrollTo({

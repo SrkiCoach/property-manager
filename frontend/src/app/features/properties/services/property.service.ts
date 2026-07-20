@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 
 import { PagedResponse } from '../../../shared/models/paged-response';
 import { CreatePropertyRequest } from '../models/create-property-request';
@@ -33,10 +33,7 @@ export class PropertyService {
       .set('direction', direction)
       .set('search', search);
 
-    return this.http.get<PagedResponse<Property>>(
-      `${this.baseUrl}/paged`,
-      { params },
-    );
+    return this.http.get<PagedResponse<Property>>(`${this.baseUrl}/paged`, { params });
   }
 
   findById(id: number): Observable<Property> {
@@ -44,24 +41,21 @@ export class PropertyService {
   }
 
   create(request: CreatePropertyRequest): Observable<Property> {
-    return this.http.post<Property>(this.baseUrl, request);
+    return this.http
+      .post<Property>(this.baseUrl, request)
+      .pipe(tap(() => this.propertyChangedSubject.next()));
   }
 
-  update(
-    id: number,
-    request: UpdatePropertyRequest,
-  ): Observable<Property> {
-    return this.http.put<Property>(
-      `${this.baseUrl}/${id}`,
-      request,
-    );
+  update(id: number, request: UpdatePropertyRequest): Observable<Property> {
+    return this.http
+      .put<Property>(`${this.baseUrl}/${id}`, request)
+      .pipe(tap(() => this.propertyChangedSubject.next()));
   }
 
   delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+    return this.http
+      .delete<void>(`${this.baseUrl}/${id}`)
+      .pipe(tap(() => this.propertyChangedSubject.next()));
   }
 
-  notifyPropertyChanged(): void {
-    this.propertyChangedSubject.next();
-  }
 }
