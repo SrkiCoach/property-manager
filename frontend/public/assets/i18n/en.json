@@ -64,7 +64,8 @@
     "EMAIL": "Enter a valid email address.",
     "MAX_LENGTH": "Maximum length is {{max}} characters.",
     "FORM_INVALID": "Some fields contain invalid values.",
-    "SERVER_FIELD_ERROR": "The server rejected this value."
+    "SERVER_FIELD_ERROR": "The server rejected this value.",
+    "MIN_LENGTH": "Must contain at least {{min}} characters."
   },
   "PROPERTIES": {
     "TITLE": "Properties",
@@ -84,6 +85,7 @@
     "NOTES": "Notes",
 
     "SEARCH_PLACEHOLDER": "Search properties...",
+    "SEARCH_CUSTOMER": "Search customer...",
 
     "SAVED_SUCCESSFULLY": "Property created successfully.",
     "UPDATED_SUCCESSFULLY": "Property updated successfully.",

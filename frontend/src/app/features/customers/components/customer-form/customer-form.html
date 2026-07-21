@@ -14,32 +14,7 @@
           (input)="clearServerError('firstName')"
         />
 
-        @if (
-          customerForm.controls.firstName.touched &&
-          customerForm.controls.firstName.hasError('required')
-        ) {
-          <small class="validation-error">
-            {{ 'VALIDATION.REQUIRED' | translate }}
-          </small>
-        }
-
-        @if (
-          customerForm.controls.firstName.touched &&
-          customerForm.controls.firstName.hasError('maxlength')
-        ) {
-          <small class="validation-error">
-            {{ 'VALIDATION.MAX_LENGTH' | translate: { max: 50 } }}
-          </small>
-        }
-
-        @if (
-          customerForm.controls.firstName.touched &&
-          customerForm.controls.firstName.hasError('server')
-        ) {
-          <small class="validation-error">
-            {{ 'VALIDATION.SERVER_FIELD_ERROR' | translate }}
-          </small>
-        }
+        <app-validation-messages [control]="customerForm.controls.firstName" />
       </div>
 
       <div class="form-field">
@@ -55,32 +30,7 @@
           (input)="clearServerError('lastName')"
         />
 
-        @if (
-          customerForm.controls.lastName.touched &&
-          customerForm.controls.lastName.hasError('required')
-        ) {
-          <small class="validation-error">
-            {{ 'VALIDATION.REQUIRED' | translate }}
-          </small>
-        }
-
-        @if (
-          customerForm.controls.lastName.touched &&
-          customerForm.controls.lastName.hasError('maxlength')
-        ) {
-          <small class="validation-error">
-            {{ 'VALIDATION.MAX_LENGTH' | translate: { max: 50 } }}
-          </small>
-        }
-
-        @if (
-          customerForm.controls.lastName.touched &&
-          customerForm.controls.lastName.hasError('server')
-        ) {
-          <small class="validation-error">
-            {{ 'VALIDATION.SERVER_FIELD_ERROR' | translate }}
-          </small>
-        }
+        <app-validation-messages [control]="customerForm.controls.lastName" />
       </div>
 
       <div class="form-field">
@@ -96,27 +46,7 @@
           (input)="clearServerError('email')"
         />
 
-        @if (customerForm.controls.email.touched && customerForm.controls.email.hasError('email')) {
-          <small class="validation-error">
-            {{ 'VALIDATION.EMAIL' | translate }}
-          </small>
-        }
-
-        @if (
-          customerForm.controls.email.touched && customerForm.controls.email.hasError('maxlength')
-        ) {
-          <small class="validation-error">
-            {{ 'VALIDATION.MAX_LENGTH' | translate: { max: 100 } }}
-          </small>
-        }
-
-        @if (
-          customerForm.controls.email.touched && customerForm.controls.email.hasError('server')
-        ) {
-          <small class="validation-error">
-            {{ 'VALIDATION.SERVER_FIELD_ERROR' | translate }}
-          </small>
-        }
+        <app-validation-messages [control]="customerForm.controls.email" />
       </div>
 
       <div class="form-field">
@@ -132,21 +62,7 @@
           (input)="clearServerError('phone')"
         />
 
-        @if (
-          customerForm.controls.phone.touched && customerForm.controls.phone.hasError('maxlength')
-        ) {
-          <small class="validation-error">
-            {{ 'VALIDATION.MAX_LENGTH' | translate: { max: 30 } }}
-          </small>
-        }
-
-        @if (
-          customerForm.controls.phone.touched && customerForm.controls.phone.hasError('server')
-        ) {
-          <small class="validation-error">
-            {{ 'VALIDATION.SERVER_FIELD_ERROR' | translate }}
-          </small>
-        }
+        <app-validation-messages [control]="customerForm.controls.phone" />
       </div>
     </div>
 

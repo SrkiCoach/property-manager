@@ -16,6 +16,8 @@ import { ApiErrorResponse } from '../../../../shared/models/api-error-response';
 
 import { finalize } from 'rxjs';
 
+import { ValidationMessages } from '../../../../shared/components/form-controls/validation-messages/validation-messages';
+
 import {
   applyServerFieldErrors,
   clearServerFieldError,
@@ -23,7 +25,7 @@ import {
 
 @Component({
   selector: 'app-customer-form',
-  imports: [ReactiveFormsModule, TranslatePipe, ButtonModule, CardModule, InputTextModule],
+  imports: [ReactiveFormsModule, TranslatePipe, ButtonModule, CardModule, InputTextModule, ValidationMessages],
   templateUrl: './customer-form.html',
   styleUrl: './customer-form.scss',
 })

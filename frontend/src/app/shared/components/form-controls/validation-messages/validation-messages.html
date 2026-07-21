@@ -1,0 +1,35 @@
+@if (control().touched) {
+  @if (control().hasError('required')) {
+    <small class="validation-error">
+      {{ 'VALIDATION.REQUIRED' | translate }}
+    </small>
+  }
+
+  @if (control().hasError('email')) {
+    <small class="validation-error">
+      {{ 'VALIDATION.EMAIL' | translate }}
+    </small>
+  }
+
+  @if (control().hasError('maxlength')) {
+    <small class="validation-error">
+      {{
+        'VALIDATION.MAX_LENGTH' | translate: { max: control().getError('maxlength').requiredLength }
+      }}
+    </small>
+  }
+
+  @if (control().hasError('minlength')) {
+    <small class="validation-error">
+      {{
+        'VALIDATION.MIN_LENGTH' | translate: { min: control().getError('minlength').requiredLength }
+      }}
+    </small>
+  }
+
+  @if (control().hasError('server')) {
+    <small class="validation-error">
+      {{ 'VALIDATION.SERVER_FIELD_ERROR' | translate }}
+    </small>
+  }
+}
