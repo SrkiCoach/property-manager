@@ -1,7 +1,6 @@
-package com.srki.backend.customer.dto;
+package com.srki.backend.dto;
 
 public record CustomerLookupResponse(
-    Long id,
-    String fullName
-) {
+                Long id,
+                String fullName) {
 }

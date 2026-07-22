@@ -1,11 +1,7 @@
 package com.srki.backend.controller;
 
-import com.srki.backend.dto.CreateCustomerRequest;
-import com.srki.backend.dto.CustomerResponse;
-import com.srki.backend.dto.PagedResponse;
-import com.srki.backend.dto.UpdateCustomerRequest;
-import com.srki.backend.service.CustomerService;
-import jakarta.validation.Valid;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import com.srki.backend.customer.dto.CustomerLookupResponse;
 
-import java.util.List;
+import com.srki.backend.dto.CreateCustomerRequest;
+import com.srki.backend.dto.CustomerLookupResponse;
+import com.srki.backend.dto.CustomerResponse;
+import com.srki.backend.dto.PagedResponse;
+import com.srki.backend.dto.UpdateCustomerRequest;
+import com.srki.backend.service.CustomerService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/customers")
