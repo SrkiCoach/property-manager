@@ -1,4 +1,12 @@
-import { Component, effect, HostListener, input, output, signal } from '@angular/core';
+import {
+  Component,
+  effect,
+  HostListener,
+  input,
+  output,
+  signal,
+  untracked,
+} from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { finalize } from 'rxjs';
@@ -23,6 +31,10 @@ import {
   clearServerFieldError,
 } from '../../../../shared/utils/form-errors.util';
 
+import { TextField } from '../../../../shared/components/form-controls/text-field/text-field';
+import { TextareaField } from '../../../../shared/components/form-controls/textarea-field/textarea-field';
+import { SelectField } from '../../../../shared/components/form-controls/select-field/select-field';
+
 @Component({
   selector: 'app-property-form',
   imports: [
@@ -33,6 +45,9 @@ import {
     InputTextModule,
     SelectModule,
     TextareaModule,
+    TextField,
+    TextareaField,
+    SelectField,
   ],
   templateUrl: './property-form.html',
   styleUrl: './property-form.scss',
@@ -67,25 +82,27 @@ export class PropertyForm {
     effect(() => {
       const property = this.property();
 
-      if (property) {
-        this.propertyForm.setValue({
-          customerId: property.customerId,
-          title: property.title,
-          address: property.address,
-          city: property.city ?? '',
-          country: property.country ?? '',
-          notes: property.notes ?? '',
-        });
-      } else {
-        this.propertyForm.reset({
-          customerId: 0,
-          title: '',
-          address: '',
-          city: '',
-          country: '',
-          notes: '',
-        });
-      }
+      /*
+       * Παρακολουθούμε μόνο το property input.
+       *
+       * Οι αλλαγές στη Reactive Form εκτελούνται μέσα σε untracked(),
+       * ώστε το effect να μη συνδεθεί κατά λάθος με την κατάσταση
+       * των form controls.
+       */
+      untracked(() => {
+        if (property) {
+          this.propertyForm.reset({
+            customerId: property.customerId,
+            title: property.title,
+            address: property.address,
+            city: property.city ?? '',
+            country: property.country ?? '',
+            notes: property.notes ?? '',
+          });
+        } else {
+          this.resetForm();
+        }
+      });
     });
 
     this.loadCustomers();
@@ -116,20 +133,24 @@ export class PropertyForm {
       )
       .subscribe({
         next: () => {
-          this.propertyForm.reset({
-            customerId: 0,
-            title: '',
-            address: '',
-            city: '',
-            country: '',
-            notes: '',
-          });
-
           this.notificationService.success(
-            currentProperty ? 'PROPERTIES.UPDATED_SUCCESSFULLY' : 'PROPERTIES.SAVED_SUCCESSFULLY',
+            currentProperty
+              ? 'PROPERTIES.UPDATED_SUCCESSFULLY'
+              : 'PROPERTIES.SAVED_SUCCESSFULLY',
           );
 
           this.saved.emit();
+
+          /*
+           * Στο edit το saved event αλλάζει το property σε null,
+           * επομένως η φόρμα καθαρίζει μέσω του effect.
+           *
+           * Στο create το property είναι ήδη null, άρα δεν υπάρχει
+           * αλλαγή στο input και καθαρίζουμε τη φόρμα εδώ.
+           */
+          if (!currentProperty) {
+            this.resetForm();
+          }
         },
 
         error: (error: HttpErrorResponse) => {
@@ -146,6 +167,15 @@ export class PropertyForm {
   }
 
   cancel(): void {
+    this.resetForm();
+    this.cancelled.emit();
+  }
+
+  clearServerError(fieldName: keyof typeof this.propertyForm.controls): void {
+    clearServerFieldError(this.propertyForm.controls[fieldName]);
+  }
+
+  private resetForm(): void {
     this.propertyForm.reset({
       customerId: 0,
       title: '',
@@ -154,12 +184,6 @@ export class PropertyForm {
       country: '',
       notes: '',
     });
-
-    this.cancelled.emit();
-  }
-
-  clearServerError(fieldName: keyof typeof this.propertyForm.controls): void {
-    clearServerFieldError(this.propertyForm.controls[fieldName]);
   }
 
   private loadCustomers(): void {
@@ -174,16 +198,27 @@ export class PropertyForm {
         },
 
         error: () => {
-          this.notificationService.error('PROPERTIES.CUSTOMER_LOOKUP_LOAD_FAILED');
+          this.notificationService.error(
+            'PROPERTIES.CUSTOMER_LOOKUP_LOAD_FAILED',
+          );
         },
       });
   }
 
-  private handleSaveError(error: HttpErrorResponse, isEditMode: boolean): void {
+  private handleSaveError(
+    error: HttpErrorResponse,
+    isEditMode: boolean,
+  ): void {
     const apiError = error.error as ApiErrorResponse | null;
 
-    if (error.status === 400 && apiError?.code === 'VALIDATION_FAILED') {
-      applyServerFieldErrors(this.propertyForm, apiError.fieldErrors);
+    if (
+      error.status === 400 &&
+      apiError?.code === 'VALIDATION_FAILED'
+    ) {
+      applyServerFieldErrors(
+        this.propertyForm,
+        apiError.fieldErrors,
+      );
 
       this.notificationService.error('VALIDATION.FORM_INVALID');
 
@@ -191,7 +226,9 @@ export class PropertyForm {
     }
 
     this.notificationService.error(
-      isEditMode ? 'PROPERTIES.UPDATE_FAILED' : 'PROPERTIES.SAVE_FAILED',
+      isEditMode
+        ? 'PROPERTIES.UPDATE_FAILED'
+        : 'PROPERTIES.SAVE_FAILED',
     );
   }
 }

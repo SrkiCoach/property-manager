@@ -3,11 +3,11 @@
 >
   <form [formGroup]="propertyForm" (ngSubmit)="save()">
     <div class="form-grid">
-      <div class="form-field">
-        <label for="customerId">
-          {{ 'PROPERTIES.CUSTOMER' | translate }}
-        </label>
-
+      <app-select-field
+        id="customerId"
+        label="PROPERTIES.CUSTOMER"
+        [control]="propertyForm.controls.customerId"
+      >
         <p-select
           inputId="customerId"
           formControlName="customerId"
@@ -24,145 +24,66 @@
           class="w-full"
           (onChange)="clearServerError('customerId')"
         />
+      </app-select-field>
 
-        @if (propertyForm.controls.customerId.invalid && propertyForm.controls.customerId.touched) {
-          <small class="error-message">
-            @if (propertyForm.controls.customerId.hasError('required')) {
-              {{ 'VALIDATION.REQUIRED' | translate }}
-            }
-
-            @if (propertyForm.controls.customerId.hasError('min')) {
-              {{ 'VALIDATION.REQUIRED' | translate }}
-            }
-
-            @if (propertyForm.controls.customerId.hasError('serverError')) {
-              {{ propertyForm.controls.customerId.getError('serverError') }}
-            }
-          </small>
-        }
-      </div>
-
-      <div class="form-field">
-        <label for="title">
-          {{ 'PROPERTIES.PROPERTY_TITLE' | translate }}
-        </label>
-
+      <app-text-field
+        id="title"
+        label="PROPERTIES.PROPERTY_TITLE"
+        [control]="propertyForm.controls.title"
+      >
         <input
-          pInputText
           id="title"
+          pInputText
           type="text"
           formControlName="title"
-          class="w-full"
           (input)="clearServerError('title')"
         />
+      </app-text-field>
 
-        @if (propertyForm.controls.title.invalid && propertyForm.controls.title.touched) {
-          <small class="error-message">
-            @if (propertyForm.controls.title.hasError('required')) {
-              {{ 'VALIDATION.REQUIRED' | translate }}
-            }
-
-            @if (propertyForm.controls.title.hasError('maxlength')) {
-              {{ 'VALIDATION.MAX_LENGTH' | translate: { max: 100 } }}
-            }
-
-            @if (propertyForm.controls.title.hasError('serverError')) {
-              {{ propertyForm.controls.title.getError('serverError') }}
-            }
-          </small>
-        }
-      </div>
-
-      <div class="form-field">
-        <label for="address">
-          {{ 'PROPERTIES.ADDRESS' | translate }}
-        </label>
-
+      <app-text-field
+        id="address"
+        label="PROPERTIES.ADDRESS"
+        [control]="propertyForm.controls.address"
+      >
         <input
-          pInputText
           id="address"
+          pInputText
           type="text"
           formControlName="address"
-          class="w-full"
           (input)="clearServerError('address')"
         />
+      </app-text-field>
 
-        @if (propertyForm.controls.address.invalid && propertyForm.controls.address.touched) {
-          <small class="error-message">
-            @if (propertyForm.controls.address.hasError('required')) {
-              {{ 'VALIDATION.REQUIRED' | translate }}
-            }
-
-            @if (propertyForm.controls.address.hasError('maxlength')) {
-              {{ 'VALIDATION.MAX_LENGTH' | translate: { max: 200 } }}
-            }
-
-            @if (propertyForm.controls.address.hasError('serverError')) {
-              {{ propertyForm.controls.address.getError('serverError') }}
-            }
-          </small>
-        }
-      </div>
-
-      <div class="form-field">
-        <label for="city">
-          {{ 'PROPERTIES.CITY' | translate }}
-        </label>
-
+      <app-text-field id="city" label="PROPERTIES.CITY" [control]="propertyForm.controls.city">
         <input
-          pInputText
           id="city"
+          pInputText
           type="text"
           formControlName="city"
-          class="w-full"
           (input)="clearServerError('city')"
         />
+      </app-text-field>
 
-        @if (propertyForm.controls.city.invalid && propertyForm.controls.city.touched) {
-          <small class="error-message">
-            @if (propertyForm.controls.city.hasError('maxlength')) {
-              {{ 'VALIDATION.MAX_LENGTH' | translate: { max: 100 } }}
-            }
-
-            @if (propertyForm.controls.city.hasError('serverError')) {
-              {{ propertyForm.controls.city.getError('serverError') }}
-            }
-          </small>
-        }
-      </div>
-
-      <div class="form-field">
-        <label for="country">
-          {{ 'PROPERTIES.COUNTRY' | translate }}
-        </label>
-
+      <app-text-field
+        id="country"
+        label="PROPERTIES.COUNTRY"
+        [control]="propertyForm.controls.country"
+      >
         <input
-          pInputText
           id="country"
+          pInputText
           type="text"
           formControlName="country"
-          class="w-full"
           (input)="clearServerError('country')"
         />
+      </app-text-field>
 
-        @if (propertyForm.controls.country.invalid && propertyForm.controls.country.touched) {
-          <small class="error-message">
-            @if (propertyForm.controls.country.hasError('maxlength')) {
-              {{ 'VALIDATION.MAX_LENGTH' | translate: { max: 100 } }}
-            }
-
-            @if (propertyForm.controls.country.hasError('serverError')) {
-              {{ propertyForm.controls.country.getError('serverError') }}
-            }
-          </small>
-        }
-      </div>
-
-      <div class="form-field form-field-full">
-        <label for="notes">
-          {{ 'PROPERTIES.NOTES' | translate }}
-        </label>
-
+      <app-textarea-field
+        id="notes"
+        label="PROPERTIES.NOTES"
+        [control]="propertyForm.controls.notes"
+        class="form-field-full"
+      >
         <textarea
           pTextarea
           id="notes"
@@ -171,19 +92,7 @@
           class="w-full"
           (input)="clearServerError('notes')"
         ></textarea>
-
-        @if (propertyForm.controls.notes.invalid && propertyForm.controls.notes.touched) {
-          <small class="error-message">
-            @if (propertyForm.controls.notes.hasError('maxlength')) {
-              {{ 'VALIDATION.MAX_LENGTH' | translate: { max: 1000 } }}
-            }
-
-            @if (propertyForm.controls.notes.hasError('serverError')) {
-              {{ propertyForm.controls.notes.getError('serverError') }}
-            }
-          </small>
-        }
-      </div>
+      </app-textarea-field>
     </div>
 
     <div class="form-actions">

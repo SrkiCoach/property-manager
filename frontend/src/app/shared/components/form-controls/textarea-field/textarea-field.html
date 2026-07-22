@@ -1,0 +1,11 @@
+<div class="form-field">
+  <label [for]="id()">
+    {{ label() | translate }}
+  </label>
+
+  <ng-content />
+
+  <app-validation-messages
+    [control]="control()"
+  />
+</div>
