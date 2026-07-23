@@ -1,6 +1,5 @@
-package com.srki.backend.repository;
+package com.srki.backend.property;
 
-import com.srki.backend.entity.Property;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,6 +22,5 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
             """)
     Page<Property> search(
             @Param("search") String search,
-            Pageable pageable
-    );
+            Pageable pageable);
 }

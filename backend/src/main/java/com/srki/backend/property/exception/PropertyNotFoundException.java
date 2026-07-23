@@ -1,4 +1,4 @@
-package com.srki.backend.exception;
+package com.srki.backend.property.exception;
 
 public class PropertyNotFoundException extends RuntimeException {
 

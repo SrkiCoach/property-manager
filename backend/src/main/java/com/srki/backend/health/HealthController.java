@@ -1,9 +1,9 @@
-package com.srki.backend.controller;
+package com.srki.backend.health;
 
-import com.srki.backend.dto.HealthResponse;
-import com.srki.backend.service.HealthService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.srki.backend.health.dto.HealthResponse;
 
 @RestController
 public class HealthController {

@@ -1,21 +1,23 @@
-package com.srki.backend.controller;
+package com.srki.backend.property;
 
-import com.srki.backend.dto.CreatePropertyRequest;
-import com.srki.backend.dto.PropertyResponse;
-import com.srki.backend.service.PropertyService;
-import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.*;
-
-import com.srki.backend.dto.PagedResponse;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.srki.backend.dto.UpdatePropertyRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.srki.backend.common.dto.PagedResponse;
+import com.srki.backend.property.dto.CreatePropertyRequest;
+import com.srki.backend.property.dto.PropertyResponse;
+import com.srki.backend.property.dto.UpdatePropertyRequest;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/properties")

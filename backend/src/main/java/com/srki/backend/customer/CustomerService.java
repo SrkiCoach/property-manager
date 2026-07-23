@@ -1,4 +1,4 @@
-package com.srki.backend.service;
+package com.srki.backend.customer;
 
 import java.util.List;
 import java.util.Set;
@@ -10,15 +10,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.srki.backend.dto.CreateCustomerRequest;
-import com.srki.backend.dto.CustomerLookupResponse;
-import com.srki.backend.dto.CustomerResponse;
-import com.srki.backend.dto.PagedResponse;
-import com.srki.backend.dto.UpdateCustomerRequest;
-import com.srki.backend.entity.Customer;
+import com.srki.backend.common.dto.PagedResponse;
+import com.srki.backend.customer.dto.CreateCustomerRequest;
+import com.srki.backend.customer.dto.CustomerLookupResponse;
+import com.srki.backend.customer.dto.CustomerResponse;
+import com.srki.backend.customer.dto.UpdateCustomerRequest;
 //import com.srki.backend.dto.UpdateCustomerRequest;
-import com.srki.backend.exception.CustomerNotFoundException;
-import com.srki.backend.repository.CustomerRepository;
+import com.srki.backend.customer.exception.CustomerNotFoundException;
 
 @Service
 public class CustomerService {

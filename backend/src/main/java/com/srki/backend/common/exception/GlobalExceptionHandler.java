@@ -1,4 +1,4 @@
-package com.srki.backend.exception;
+package com.srki.backend.common.exception;
 
 import java.time.Instant;
 import java.util.LinkedHashMap;
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.srki.backend.dto.ApiErrorResponse;
-
-//import com.srki.backend.exception.PropertyNotFoundException;
+import com.srki.backend.common.dto.ApiErrorResponse;
+import com.srki.backend.customer.exception.CustomerNotFoundException;
+import com.srki.backend.property.exception.PropertyNotFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {

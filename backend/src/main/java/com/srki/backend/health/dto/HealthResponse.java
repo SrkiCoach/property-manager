@@ -1,4 +1,4 @@
-package com.srki.backend.dto;
+package com.srki.backend.health.dto;
 
 public class HealthResponse {
 

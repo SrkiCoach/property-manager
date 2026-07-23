@@ -1,4 +1,4 @@
-package com.srki.backend.controller;
+package com.srki.backend.customer;
 
 import java.util.List;
 
@@ -14,12 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.srki.backend.dto.CreateCustomerRequest;
-import com.srki.backend.dto.CustomerLookupResponse;
-import com.srki.backend.dto.CustomerResponse;
-import com.srki.backend.dto.PagedResponse;
-import com.srki.backend.dto.UpdateCustomerRequest;
-import com.srki.backend.service.CustomerService;
+import com.srki.backend.common.dto.PagedResponse;
+import com.srki.backend.customer.dto.CreateCustomerRequest;
+import com.srki.backend.customer.dto.CustomerLookupResponse;
+import com.srki.backend.customer.dto.CustomerResponse;
+import com.srki.backend.customer.dto.UpdateCustomerRequest;
 
 import jakarta.validation.Valid;
 

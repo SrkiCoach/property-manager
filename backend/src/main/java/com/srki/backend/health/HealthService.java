@@ -1,7 +1,8 @@
-package com.srki.backend.service;
+package com.srki.backend.health;
 
-import com.srki.backend.dto.HealthResponse;
 import org.springframework.stereotype.Service;
+
+import com.srki.backend.health.dto.HealthResponse;
 
 @Service
 public class HealthService {
@@ -11,7 +12,6 @@ public class HealthService {
         return new HealthResponse(
                 "UP",
                 "Property Manager",
-                "1.0.0"
-        );
+                "1.0.0");
     }
 }

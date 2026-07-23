@@ -1,4 +1,4 @@
-package com.srki.backend.repository;
+package com.srki.backend.customer;
 
 import java.util.List;
 
@@ -7,8 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.srki.backend.dto.CustomerLookupResponse;
-import com.srki.backend.entity.Customer;
+import com.srki.backend.customer.dto.CustomerLookupResponse;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
@@ -20,7 +19,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             Pageable pageable);
 
     @Query("""
-            select new com.srki.backend.dto.CustomerLookupResponse(
+            select new com.srki.backend.customer.dto.CustomerLookupResponse(
                 c.id,
                 concat(c.firstName, ' ', c.lastName)
             )

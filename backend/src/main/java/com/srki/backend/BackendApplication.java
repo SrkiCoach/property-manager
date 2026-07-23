@@ -5,8 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.srki.backend.entity.Customer;
-import com.srki.backend.repository.CustomerRepository;
+import com.srki.backend.customer.Customer;
+import com.srki.backend.customer.CustomerRepository;
 
 @SpringBootApplication
 public class BackendApplication {

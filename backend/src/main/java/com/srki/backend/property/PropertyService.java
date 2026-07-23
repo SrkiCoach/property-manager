@@ -1,26 +1,23 @@
-package com.srki.backend.service;
-
-import com.srki.backend.dto.CreatePropertyRequest;
-import com.srki.backend.dto.PropertyResponse;
-import com.srki.backend.entity.Customer;
-import com.srki.backend.entity.Property;
-import com.srki.backend.exception.CustomerNotFoundException;
-import com.srki.backend.repository.CustomerRepository;
-import com.srki.backend.repository.PropertyRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.srki.backend.dto.PagedResponse;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+package com.srki.backend.property;
 
 import java.util.List;
 import java.util.Map;
 
-import com.srki.backend.dto.UpdatePropertyRequest;
-import com.srki.backend.exception.PropertyNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.srki.backend.common.dto.PagedResponse;
+import com.srki.backend.customer.Customer;
+import com.srki.backend.customer.CustomerRepository;
+import com.srki.backend.customer.exception.CustomerNotFoundException;
+import com.srki.backend.property.dto.CreatePropertyRequest;
+import com.srki.backend.property.dto.PropertyResponse;
+import com.srki.backend.property.dto.UpdatePropertyRequest;
+import com.srki.backend.property.exception.PropertyNotFoundException;
 
 @Service
 public class PropertyService {

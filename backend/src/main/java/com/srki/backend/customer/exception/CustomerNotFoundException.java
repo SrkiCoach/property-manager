@@ -1,4 +1,4 @@
-package com.srki.backend.exception;
+package com.srki.backend.customer.exception;
 
 public class CustomerNotFoundException extends RuntimeException {
 
